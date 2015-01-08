@@ -35,6 +35,7 @@ void Root::runEngine()
 		//Handle input
 		InputManager::getSingleton()->processInputEvents();
 		//Swap buffers (RenderWindow)
+		mRenderWindow->swapBuffers();
 	}
 }
 

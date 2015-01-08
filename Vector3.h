@@ -26,8 +26,9 @@ public:
 	Vector3 operator/(const float& n);
 	
 
-	//Vector components
+	//Vector components (same value different name)
 	float x, y, z;
+	float r, g, b;
 
 private:
 	//Hidden glm vector (which is the real vector)

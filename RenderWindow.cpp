@@ -10,23 +10,25 @@ RenderWindow::RenderWindow(std::string windowName, int width, int height)
 {
 
 	//inits SDL and GLEW
-	SDL_Init(SDL_INIT_EVERYTHING);
-	glewExperimental = GL_TRUE;
-	glewInit();
-
-	//Set attributes
-	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	SDL_Init(SDL_INIT_VIDEO);
 
 	//create the window
 	mSDLWindow = SDL_CreateWindow(windowName.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, mWidth, mHeight, SDL_WINDOW_OPENGL);
 	//create the context
 	mSDL_GL_Context = SDL_GL_CreateContext(mSDLWindow);
+
+	//Set OPENGL attributes
+	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
+
+	SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
+	glewExperimental = GL_TRUE;
+	glewInit();
 
 	//GET INFO
 	const char* vendor = reinterpret_cast<const char*>(glGetString(GL_VENDOR));
@@ -67,7 +69,24 @@ RenderWindow::~RenderWindow()
 	FE_LOG(FE_LOG::INFO, "Render Window destroyed");
 }
 
-Viewport* RenderWindow::addViewport(int originX, int originY, int width, int height)
+void RenderWindow::swapBuffers()
+{
+	//Gl enbales
+	glEnable(GL_SCISSOR_TEST);
+
+	//Clear the buffer each frame
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//Set the viewport if needed
+	foreach(vp, mViewportList)
+	{
+		(*vp)->updateViewport();
+	}
+
+
+	SDL_GL_SwapWindow(mSDLWindow);
+}
+
+Viewport* RenderWindow::addViewport(const int& originX, const int& originY, const int& width, const int& height)
 {
 	//Create and save the new viewport
 	Viewport* vp = new Viewport(originX, originY, width, height);

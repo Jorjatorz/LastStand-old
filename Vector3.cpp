@@ -2,17 +2,17 @@
 
 
 Vector3::Vector3()
-	:x(0.0),
-	y(0.0),
-	z(0.0),
+	:x(0.0), r(0.0),
+	y(0.0), g(0.0),
+	z(0.0), b(0.0),
 	mGLMVector(0.0)
 {
 }
 
 Vector3::Vector3(const float& xyz)
-	:x(xyz),
-	y(xyz),
-	z(xyz),
+	:x(xyz), r(xyz),
+	y(xyz), g(xyz),
+	z(xyz), b(xyz),
 	mGLMVector(xyz)
 {
 
@@ -31,9 +31,9 @@ Vector3::~Vector3()
 void Vector3::copyFromGLMVector()
 {
 	//Set the public class components equal to the glm vector components
-	x = mGLMVector.x;
-	y = mGLMVector.y;
-	z = mGLMVector.z;
+	x = r = mGLMVector.x;
+	y = g = mGLMVector.y;
+	z = b = mGLMVector.z;
 }
 
 

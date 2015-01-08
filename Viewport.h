@@ -17,7 +17,13 @@ class Viewport
 	Vector3 mClearColor;
 
 public:
-	Viewport(int x, int y, int width, int height);
+	Viewport(const int& x, const int& y, const int& width, const int& height);
 	~Viewport();
+
+	//Check if the viewport is dirty and if it's update it.
+	void updateViewport();
+
+	//Change the clear color
+	void setClearColor(const Vector3& newColor);
 };
 
