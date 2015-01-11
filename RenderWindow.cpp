@@ -74,14 +74,14 @@ void RenderWindow::swapBuffers()
 	//Gl enbales
 	glEnable(GL_SCISSOR_TEST);
 
-	//Clear the buffer each frame
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//Set the viewport if needed
 	foreach(vp, mViewportList)
 	{
 		(*vp)->updateViewport();
 	}
 
+	//Clear the buffer each frame
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	SDL_GL_SwapWindow(mSDLWindow);
 }

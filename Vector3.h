@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm\glm.hpp>
+#include <glm\gtc\type_ptr.hpp>
 
 //Warp class for glm vector
 class Vector3
@@ -24,16 +25,14 @@ public:
 	Vector3 operator-(const float& n);
 	Vector3 operator*(const float& n);
 	Vector3 operator/(const float& n);
-	
+
+	//Return the constant address of the first element of the vector
+	const float* getValuePtr() const;
 
 	//Vector components (same value different name)
-	float x, y, z;
-	float r, g, b;
+	union{ float x, r, s;};
+	union{ float y, g, t; };
+	union{ float z, b, p; };
 
-private:
-	//Hidden glm vector (which is the real vector)
-	glm::vec3 mGLMVector;
-	//Function to copy the glm vector components to the x,y,z of this class
-	inline void copyFromGLMVector();
 };
 

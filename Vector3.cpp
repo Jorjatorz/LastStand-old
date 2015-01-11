@@ -2,25 +2,24 @@
 
 
 Vector3::Vector3()
-	:x(0.0), r(0.0),
-	y(0.0), g(0.0),
-	z(0.0), b(0.0),
-	mGLMVector(0.0)
+	:x(0.0),
+	y(0.0),
+	z(0.0)
 {
 }
 
 Vector3::Vector3(const float& xyz)
-	:x(xyz), r(xyz),
-	y(xyz), g(xyz),
-	z(xyz), b(xyz),
-	mGLMVector(xyz)
+	:x(xyz),
+	y(xyz),
+	z(xyz)
 {
 
 }
 Vector3::Vector3(const float& x, const float& y, const float& z)
-	:mGLMVector(x, y, z)
+	:x(x),
+	y(y),
+	z(z)
 {
-	copyFromGLMVector();
 }
 
 
@@ -28,82 +27,88 @@ Vector3::~Vector3()
 {
 }
 
-void Vector3::copyFromGLMVector()
-{
-	//Set the public class components equal to the glm vector components
-	x = r = mGLMVector.x;
-	y = g = mGLMVector.y;
-	z = b = mGLMVector.z;
-}
-
 
 Vector3& Vector3::operator=(const Vector3& other)
 {
-	mGLMVector = other.mGLMVector;
-	copyFromGLMVector();
+	x = other.x;
+	y = other.y;
+	z = other.z;
 
 	return *this;
 }
 
 bool Vector3::operator == (const Vector3& other)
 {
-	return mGLMVector == other.mGLMVector;
+	return ((x == other.x) && (y == other.y) && (z == other.z));
 }
 
 Vector3 Vector3::operator+(const Vector3& other)
 {
 	Vector3 result;
-	result.mGLMVector = mGLMVector + other.mGLMVector;
-	result.copyFromGLMVector();
+	result.x = x + other.x;
+	result.y = y + other.y;
+	result.z = z + other.z;
 	return result;
 }
 Vector3 Vector3::operator-(const Vector3& other)
 {
 	Vector3 result;
-	result.mGLMVector = mGLMVector - other.mGLMVector;
-	result.copyFromGLMVector();
+	result.x = x - other.x;
+	result.y = y - other.y;
+	result.z = z - other.z;
 	return result;
 }
 Vector3 Vector3::operator*(const Vector3& other)
 {
 	Vector3 result;
-	result.mGLMVector = mGLMVector * other.mGLMVector;
-	result.copyFromGLMVector();
+	result.x = x * other.x;
+	result.y = y * other.y;
+	result.z = z * other.z;
 	return result;
 }
 Vector3 Vector3::operator/(const Vector3& other)
 {
 	Vector3 result;
-	result.mGLMVector = mGLMVector / other.mGLMVector;
-	result.copyFromGLMVector();
+	result.x = x / other.x;
+	result.y = y / other.y;
+	result.z = z / other.z;
 	return result;
 }
 
 Vector3 Vector3::operator+(const float& n)
 {
 	Vector3 result;
-	result.mGLMVector = mGLMVector + n;
-	result.copyFromGLMVector();
+	result.x = x + n;
+	result.y = y + n;
+	result.z = z + n;
 	return result;
 }
 Vector3 Vector3::operator-(const float& n)
 {
 	Vector3 result;
-	result.mGLMVector = mGLMVector - n;
-	result.copyFromGLMVector();
+	result.x = x - n;
+	result.y = y - n;
+	result.z = z - n;
 	return result;
 }
 Vector3 Vector3::operator*(const float& n)
 {
 	Vector3 result;
-	result.mGLMVector = mGLMVector * n;
-	result.copyFromGLMVector();
+	result.x = x * n;
+	result.y = y * n;
+	result.z = z * n;
 	return result;
 }
 Vector3 Vector3::operator/(const float& n)
 {
 	Vector3 result;
-	result.mGLMVector = mGLMVector / n;
-	result.copyFromGLMVector();
+	result.x = x / n;
+	result.y = y / n;
+	result.z = z / n;
 	return result;
+}
+
+const float* Vector3::getValuePtr() const
+{
+	return &x;
 }
