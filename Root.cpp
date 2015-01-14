@@ -1,10 +1,12 @@
 #include "Root.h"
 
-#include "RenderWindow.h"
 #include "InputManager.h"
+#include "RenderWindow.h"
+#include "ResourceManager.h"
 
 Root::Root()
 	:mRenderWindow(NULL),
+	mResourceManagerPtr(NULL),
 	mEngineRunning(false)
 {
 }
@@ -19,6 +21,9 @@ Root::~Root()
 RenderWindow* Root::initEngine(std::string windowName)
 {
 	FE_LOG(FE_LOG::INFO, "Initializing Engine...");
+	//Create ResoruceManager singleton
+	mResourceManagerPtr = new ResourceManager();
+
 	//Create a new render window with default values
 	mRenderWindow = new RenderWindow(windowName, 1080, 720);
 

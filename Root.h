@@ -21,5 +21,7 @@ public:
 private:
 	//Pointer to the render window
 	RenderWindow* mRenderWindow;
+	//Pointer to the ResourceManager
+	ResourceManager* mResourceManagerPtr;
 };
 

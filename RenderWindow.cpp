@@ -2,6 +2,7 @@
 
 #include "Viewport.h"
 #include "InputManager.h"
+#include "DeferredFrameBuffer.h"
 
 RenderWindow::RenderWindow(std::string windowName, int width, int height)
 	:mName(windowName),
@@ -42,12 +43,18 @@ RenderWindow::RenderWindow(std::string windowName, int width, int height)
 	//Create the imputManager
 	InputManager* newInputManagerSingleton = new InputManager(mSDLWindow);
 
+	//Create the GBuffer
+	mGBuffer = new DeferredFrameBuffer("RenderWindow_GBuffer", mWidth, mHeight);
+
 	FE_LOG(FE_LOG::INFO, "Render Window created");
 }
 
 
 RenderWindow::~RenderWindow()
 {
+	//Delete the gBuffer
+	delete mGBuffer;
+
 	//Delete all the attached viewports
 	foreach(viewp, mViewportList)
 	{
@@ -74,14 +81,19 @@ void RenderWindow::swapBuffers()
 	//Gl enbales
 	glEnable(GL_SCISSOR_TEST);
 
+	//Bind the frameBuffer
+	mGBuffer->bindForDrawingToTextures();
+
 	//Set the viewport if needed
 	foreach(vp, mViewportList)
 	{
 		(*vp)->updateViewport();
 	}
-
 	//Clear the buffer each frame
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//Unbind the frameBuffer
+	mGBuffer->unBind();
 
 	SDL_GL_SwapWindow(mSDLWindow);
 }

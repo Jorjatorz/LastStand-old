@@ -18,7 +18,8 @@ public:
 		VERTEXTEXCOORD //2
 	} shaderLocations;
 
-	void loadShader(std::string filePath);
+	//Load the shader, false if an error ocurred
+	bool loadShader(std::string filePath);
 
 	GLuint getShaderProgram();
 

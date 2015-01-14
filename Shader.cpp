@@ -13,7 +13,7 @@ Shader::~Shader(void)
 	glDeleteProgram(mProgram);
 }
 
-void Shader::loadShader(std::string filePath)
+bool Shader::loadShader(std::string filePath)
 {
 	std::ifstream file;
 	std::stringstream strStreamBuffer; //string stream buffer
@@ -28,6 +28,7 @@ void Shader::loadShader(std::string filePath)
 	if (!file.is_open())
 	{
 		FE_LOG(FE_LOG::ERR, "Error loading VERTEX shader: " + filePath);
+		return false;
 	}
 	else
 	{
@@ -69,6 +70,7 @@ void Shader::loadShader(std::string filePath)
 	if (!file.is_open())
 	{
 		FE_LOG(FE_LOG::ERR, "Error loading FRAGMENT shader: " + filePath);
+		return false;
 	}
 	else
 	{
@@ -118,6 +120,8 @@ void Shader::loadShader(std::string filePath)
 
 	//save the program
 	mProgram = program;
+
+	return true;
 }
 
 GLuint Shader::getShaderProgram()

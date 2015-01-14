@@ -26,5 +26,8 @@ private:
 	//SDL Staff
 	SDL_Window* mSDLWindow;
 	SDL_GLContext mSDL_GL_Context;
+
+	//GBuffer for deferred rendering
+	DeferredFrameBuffer* mGBuffer;
 };
 

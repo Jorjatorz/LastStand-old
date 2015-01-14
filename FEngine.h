@@ -2,15 +2,18 @@
 
 #pragma once
 
+//STL
 #include <assert.h>
 #include <fstream>
 #include <iostream>
+#include <queue>
 #include <sstream>
 #include <string>
 #include <unordered_map>
 #include <vector>
 #include <Windows.h>
 
+//SDL/OPENGL
 #include <SDL.h>
 #include <gl\glew.h>
 #include <gl\gl.h>
@@ -19,11 +22,19 @@
 #include "FE_LOG.h"
 #include "Vector3.h"
 
+class DeferredFrameBuffer;
+class Entity;
+class FrameBuffer;
 class InputManager;
+class MovableObject;
+class Renderer;
 class RenderWindow;
 class ResourceManager;
 class Root;
+class SceneManager;
+class SceneNode;
 class Shader;
+class Texture;
 class Viewport;
 
 
