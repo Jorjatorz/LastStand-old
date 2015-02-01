@@ -1,7 +1,6 @@
 #pragma once
 
 #include <glm\glm.hpp>
-#include <glm\gtc\type_ptr.hpp>
 
 //Warp class for glm vector
 class Vector3
@@ -14,7 +13,11 @@ public:
 
 	//Operator overloading
 	Vector3& operator=(const Vector3& other);
-	bool operator==(const Vector3& other);
+	bool operator==(const Vector3& other) const;
+	bool operator!=(const Vector3& other) const;
+
+	Vector3& operator+=(const Vector3& other);
+	Vector3& operator-=(const Vector3& other);
 
 	Vector3 operator+(const Vector3& other);
 	Vector3 operator-(const Vector3& other);

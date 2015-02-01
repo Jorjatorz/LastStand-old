@@ -82,7 +82,7 @@ void RenderWindow::swapBuffers()
 	glEnable(GL_SCISSOR_TEST);
 
 	//Bind the frameBuffer
-	mGBuffer->bindForDrawingToTextures();
+	mGBuffer->bindForGeometryPass();
 
 	//Set the viewport if needed
 	foreach(vp, mViewportList)
@@ -91,6 +91,8 @@ void RenderWindow::swapBuffers()
 	}
 	//Clear the buffer each frame
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	mGBuffer->drawToScreenQuad(-1, 1, 1 ,-1);
 
 	//Unbind the frameBuffer
 	mGBuffer->unBind();

@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <fstream>
 #include <iostream>
+#include <list>
 #include <queue>
 #include <sstream>
 #include <string>
@@ -20,12 +21,15 @@
 
 //Custom engine includes
 #include "FE_LOG.h"
+#include "Matrix4.h"
+#include "Quaternion.h"
 #include "Vector3.h"
 
 class DeferredFrameBuffer;
 class Entity;
 class FrameBuffer;
 class InputManager;
+class Mesh;
 class MovableObject;
 class Renderer;
 class RenderWindow;

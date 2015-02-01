@@ -44,13 +44,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>D:\SDK\SDL\include;D:\SDK\FREEIMAGE\Dist</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SDK\SDL\include;D:\SDK\FREEIMAGE\Dist;D:\SDK\ASSIMP\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\SDK\SDL\lib\x86;D:\SDK\FREEIMAGE\Dist;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;FreeImaged.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\SDK\SDL\lib\x86;D:\SDK\FREEIMAGE\Dist;D:\SDK\ASSIMP\include;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;assimp.lib;FreeImaged.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -61,15 +61,15 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>D:\SDK\SDL\include;D:\SDK\FREEIMAGE\Dist</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SDK\SDL\include;D:\SDK\FREEIMAGE\Dist;D:\SDK\ASSIMP\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>D:\SDK\SDL\lib\x86;D:\SDK\FREEIMAGE\Dist;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\SDK\SDL\lib\x86;D:\SDK\FREEIMAGE\Dist;D:\SDK\ASSIMP\include;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;glew32.lib;opengl32.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -80,7 +80,10 @@
     <ClCompile Include="FrameBuffer.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Matrix4.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MovableObject.cpp" />
+    <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="RenderWindow.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -99,7 +102,10 @@
     <ClInclude Include="FE_LOG.h" />
     <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Matrix4.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="MovableObject.h" />
+    <ClInclude Include="Quaternion.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RenderWindow.h" />
     <ClInclude Include="ResourceManager.h" />

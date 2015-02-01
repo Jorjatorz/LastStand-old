@@ -9,5 +9,24 @@ class MovableObject
 public:
 	MovableObject();
 	~MovableObject();
+
+	std::string getName()
+	{
+		return mName;
+	}
+	bool isAttached()
+	{
+		return mAttachedToSceneNode;
+	}
+	void setAttached(bool b)
+	{
+		mAttachedToSceneNode = b;
+	}
+
+private:
+	//MovableObject name
+	std::string mName;
+	//True if attached to a scenenode
+	bool mAttachedToSceneNode;
 };
 

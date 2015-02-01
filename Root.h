@@ -18,10 +18,18 @@ public:
 	//Stops the engine(exit the main loop)
 	void stopEngine();
 
+	//Return the scenemanager
+	SceneManager* getSceneManager()
+	{
+		return mSceneManager;
+	}
+
 private:
-	//Pointer to the render window
+	//Pointer to the render window (created by the Root)
 	RenderWindow* mRenderWindow;
-	//Pointer to the ResourceManager
+	//Pointer to the ResourceManager (created by the Root)
 	ResourceManager* mResourceManagerPtr;
+	//Pointer to the SceneManager (created by the Root)
+	SceneManager* mSceneManager;
 };
 

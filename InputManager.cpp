@@ -15,7 +15,7 @@ InputManager::InputManager(SDL_Window* SDLWindow)
 	{
 		*elem = false;
 	}
-	mMouseInput.mouseX = mMouseInput.mouseY = 0.0;
+	mMouseInput.mouseX = mMouseInput.mouseY = 0;
 }
 
 

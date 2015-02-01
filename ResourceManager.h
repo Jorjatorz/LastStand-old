@@ -12,7 +12,7 @@ public:
 	~ResourceManager();
 
 	//Load a new shader into the memory
-	Shader* loadShaderIntoMemory(std::string shaderName);
+	Shader* loadShaderIntoMemoryFromFile(std::string shaderName);
 	//Delete the shader stored in memory
 	void deleteShaderFromMemory(std::string shaderName);
 	//Return the shader stored in memory
@@ -27,10 +27,19 @@ public:
 	//Return the texture stored in memory
 	Texture* getTextureInMemory(std::string textureName);
 
+	//Load a mesht into the memory
+	Mesh* loadMeshIntoMemory(std::string meshName);
+	//Delete a mesh from memory
+	void deleteMeshFromMemory(std::string meshName);
+	//Return the mesh stored in meory
+	Mesh* getMeshInMemory(std::string meshName);
+
 private:
 	//Map containing all the shaders loaded
 	std::unordered_map<std::string, Shader*> mShaderMap;
 	//Map containing all the texture loaded
 	std::unordered_map<std::string, Texture*> mTextureMap;
+	//Map containing all the meshes loaded
+	std::unordered_map<std::string, Mesh*> mMeshMap;
 };
 

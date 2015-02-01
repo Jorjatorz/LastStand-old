@@ -21,7 +21,12 @@ public:
 	//Load the shader, false if an error ocurred
 	bool loadShader(std::string filePath);
 
+	//Return the gl shader program
 	GLuint getShaderProgram();
+	//bind the shader (gl_UsePorgram)
+	void bind();
+	//unbind the shader
+	static void unBind();
 
 	// Communication with shader
 	void UniformTexture(const std::string& uniformName, GLint activeTextureSlot);
@@ -34,11 +39,5 @@ private:
 	//Shader program and shader name
 	std::string mName;
 	GLuint mProgram;
-
-	//Private functions
-	//bind the shader (gl_UsePorgram)
-	void bind();
-	//unbind the shader
-	void unBind();
 
 };
