@@ -36,6 +36,9 @@ public:
 	//Load the mesh (vertices, normals, etc) from a file
 	bool loadMesh(std::string meshPath);
 
+	//Renders all the submeshes into the buffer
+	void renderAllSubMeshes();
+
 private:
 	std::string mName;
 };

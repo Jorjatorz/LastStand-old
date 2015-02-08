@@ -29,10 +29,11 @@ public:
 	static void unBind();
 
 	// Communication with shader
-	void UniformTexture(const std::string& uniformName, GLint activeTextureSlot);
-	void Uniform(const std::string& uniformName, GLint value);
-	void Uniform(const std::string& uniformName, GLfloat value);
-	void Uniform(const std::string& uniformName, const Vector3& value);
+	void uniformTexture(const std::string& uniformName, GLint activeTextureSlot);
+	void uniform(const std::string& uniformName, GLint value);
+	void uniform(const std::string& uniformName, GLfloat value);
+	void uniform(const std::string& uniformName, const Vector3& value);
+	void uniformMatrix(const std::string & uniformName, const Matrix4& value);
 
 private:
 	//Variables

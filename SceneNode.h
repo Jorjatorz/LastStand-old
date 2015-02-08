@@ -8,7 +8,7 @@
 class SceneNode
 {
 public:
-	SceneNode(std::string sceneNodeName, SceneNode* nodeParent = NULL);
+	SceneNode(std::string sceneNodeName, SceneManager* manager, SceneNode* nodeParent = NULL);
 	~SceneNode(void);
 
 
@@ -26,6 +26,12 @@ public:
 	void deleteChildrenNode(SceneNode* child);
 	//deletes all the childs
 	void deleteAllChilds();
+	//Return the child map
+	const std::unordered_map<std::string, SceneNode*>& getChildNodesMap() const
+	{
+		return mChildNodesMap;
+	}
+
 	//attach a movableobjecto to the scenenode
 	void attachObject(MovableObject* mNewObject);
 	//deatach an object by name
@@ -34,7 +40,11 @@ public:
 	void detachObject(MovableObject* movableObject);
 	//Deatach all the attached movable objects
 	void detachAllObjects();
-
+	//Return the movableobject map
+	const std::unordered_map<std::string, MovableObject*>& getMovablesObjectsMap() const
+	{
+		return mMovableObjectsMap;
+	}
 
 	//transformations functions
 	void translate(Vector3 trans);
@@ -98,6 +108,9 @@ private:
 
 	//Parent Scenenode (NULL if it's the root)
 	SceneNode* mParent;
+
+	//Scenemanager creator of the node
+	SceneManager* creator;
 
 	//Map containing all the movableobjects attached to this scenenode
 	std::unordered_map<std::string, MovableObject*> mMovableObjectsMap;

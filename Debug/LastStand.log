@@ -1,20 +1,26 @@
-﻿Build started 01/02/2015 1:57:27.
+﻿Build started 09/02/2015 0:02:23.
      1>Project "D:\Users\Jorge\Documents\Programacion\Programas\C++\VS-2012\LastStand-2\LastStand\LastStand\LastStand.vcxproj" on node 2 (Build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\LastStand.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ID:\SDK\SDL\include /ID:\SDK\FREEIMAGE\Dist /ID:\SDK\ASSIMP\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt DeferredFrameBuffer.cpp
-         DeferredFrameBuffer.cpp
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ID:\SDK\SDL\include /ID:\SDK\FREEIMAGE\Dist /ID:\SDK\ASSIMP\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt SceneNode.cpp
+         SceneNode.cpp
        Link:
          D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Users\Jorge\Documents\Programacion\Programas\C++\VS-2012\LastStand-2\LastStand\Debug\LastStand.exe" /INCREMENTAL /NOLOGO /LIBPATH:D:\SDK\SDL\lib\x86 /LIBPATH:D:\SDK\FREEIMAGE\Dist /LIBPATH:D:\SDK\ASSIMP\include SDL2.lib SDL2main.lib glew32.lib opengl32.lib assimp.lib FreeImaged.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Users\Jorge\Documents\Programacion\Programas\C++\VS-2012\LastStand-2\LastStand\Debug\LastStand.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Users\Jorge\Documents\Programacion\Programas\C++\VS-2012\LastStand-2\LastStand\Debug\LastStand.lib" /MACHINE:X86 Debug\DeferredFrameBuffer.obj
          Debug\Entity.obj
+         Debug\Event.obj
+         Debug\EventListener.obj
+         Debug\EventManager.obj
          Debug\FE_LOG.obj
          Debug\FrameBuffer.obj
          Debug\InputManager.obj
+         Debug\KeyboardEvent.obj
          Debug\main.obj
          Debug\Matrix4.obj
          Debug\Mesh.obj
+         Debug\MouseEvent.obj
          Debug\MovableObject.obj
+         Debug\Pruebas.obj
          Debug\Quaternion.obj
          Debug\Renderer.obj
          Debug\RenderWindow.obj
@@ -34,4 +40,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.41
+Time Elapsed 00:00:01.54

@@ -31,5 +31,9 @@ private:
 	ResourceManager* mResourceManagerPtr;
 	//Pointer to the SceneManager (created by the Root)
 	SceneManager* mSceneManager;
+	//Pointer to the renderer (created by the Root)
+	Renderer* mRenderer;
+	//Pointer to the eventManager (created by the Root)
+	EventManager* mEventManager;
 };
 

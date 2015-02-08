@@ -46,14 +46,21 @@ Matrix4 Matrix4::operator-(const Matrix4& other)
 Matrix4 Matrix4::operator*(const Matrix4& other)
 {
 	Matrix4 newM;
-	newM.mGLMMatrix = mGLMMatrix - other.mGLMMatrix;
+	newM.mGLMMatrix = mGLMMatrix * other.mGLMMatrix;
+	return newM;
+}
+
+const Matrix4 Matrix4::operator*(const Matrix4& other) const
+{
+	Matrix4 newM;
+	newM.mGLMMatrix = mGLMMatrix * other.mGLMMatrix;
 	return newM;
 }
 
 Matrix4 Matrix4::operator/(const Matrix4& other)
 {
 	Matrix4 newM;
-	newM.mGLMMatrix = mGLMMatrix - other.mGLMMatrix;
+	newM.mGLMMatrix = mGLMMatrix / other.mGLMMatrix;
 	return newM;
 }
 
@@ -103,4 +110,17 @@ void Matrix4::rotate(const Vector3& rotVec)
 void Matrix4::scale(const Vector3& scaleVec)
 {
 	mGLMMatrix = glm::scale(mGLMMatrix, glm::vec3(scaleVec.x, scaleVec.y, scaleVec.z));
+}
+
+Matrix4 Matrix4::createPerspectiveMatrix(float FOV, float width, float height, float zNear, float zFar)
+{
+	Matrix4 newMat;
+	newMat.mGLMMatrix = glm::perspective(FOV, width/height, zNear, zFar);
+
+	return newMat;
+}
+
+const float* Matrix4::getValuePtr() const
+{
+	return &mGLMMatrix[0].x;
 }

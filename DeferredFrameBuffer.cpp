@@ -20,16 +20,13 @@ DeferredFrameBuffer::DeferredFrameBuffer(std::string name, int width, int height
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, mWidth, mHeight, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, mFrameBufferId);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTextureId, 0);
-
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	//Create ScreenQuad buffers
@@ -73,13 +70,13 @@ void DeferredFrameBuffer::bindForLightPass()
 	//Draw to buffer
 	glDrawBuffers(1, lightAttachments);
 }
-
+#include "Texture.h"
 void DeferredFrameBuffer::drawToScreenQuad(float startX, float startY, float endX, float endY)
 {
 	//Unbind any active framebuffer
 	unBind();
 
-	//Vertex and UV data
+	//Update Vertex and UV data
 	const GLfloat vertex_positions[] =
 	{
 		startX, startY, 0.0f, 1.0f,
@@ -96,16 +93,21 @@ void DeferredFrameBuffer::drawToScreenQuad(float startX, float startY, float end
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	//Bind shader
-
+	ResourceManager::getSingleton()->getShaderInMemory("DeferredShading_Combination")->bind();
 
 	glDisable(GL_DEPTH_TEST);
+
 	glBindVertexArray(screenQuadVAO);
 
-	ResourceManager::getSingleton()->getShaderInMemory("DeferredShading_Combination")->bind();
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, mTextureMap.find("DeferredFrameBufferText_Color")->second->getTextureId());
+	ResourceManager::getSingleton()->getShaderInMemory("DeferredShading_Combination")->uniformTexture("colorTex", 0);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindVertexArray(0);
+
 	glEnable(GL_DEPTH_TEST);
 
 	Shader::unBind();

@@ -4,9 +4,11 @@
 
 class RenderWindow
 {
-	//Variables
+	//Name displayed in the header of the window
 	std::string mName;
+	//Width of the window
 	int mWidth;
+	//Height of the window
 	int mHeight;
 
 	//Viewport list
@@ -26,6 +28,9 @@ private:
 	//SDL Staff
 	SDL_Window* mSDLWindow;
 	SDL_GLContext mSDL_GL_Context;
+
+	//Projection matrix
+	Matrix4 mProjectionMatrix;
 
 	//GBuffer for deferred rendering
 	DeferredFrameBuffer* mGBuffer;

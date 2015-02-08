@@ -158,10 +158,14 @@ Mesh* ResourceManager::loadMeshIntoMemory(std::string meshName)
 {
 	FE_LOG(FE_LOG::INFO, "Loading Mesh " + meshName);
 
-	if (mMeshMap.find(meshName) != mMeshMap.end())
+	auto it = mMeshMap.find(meshName);
+	if (it != mMeshMap.end())
 	{
-		FE_LOG(FE_LOG::ERR, "Mesh already into memory, can't load it " + meshName);
-		assert(0);
+		//We return the mesh, dont pop an error
+		/*FE_LOG(FE_LOG::ERR, "Mesh already into memory, can't load it " + meshName);
+		assert(0);*/
+
+		return it->second;
 	}
 
 	Mesh* newMesh = new Mesh(meshName);

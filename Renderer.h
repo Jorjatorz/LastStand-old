@@ -2,16 +2,23 @@
 
 #include "FEngine.h"
 
-class Renderer
+#include "Singleton.h"
+
+class Renderer: public Singleton<Renderer>
 {
 public:
 	Renderer();
 	~Renderer();
 
-	void processOpaqueRenderingQueue();
+	//Process all the objects in the opaque queue
+	void processOpaqueRenderingQueue(const Matrix4& PVMatrix);
+	//Push a new object into the opaquequeue
+	void pushObjectToOpaqueQueue(MovableObject* obj);
+	//Clear the opaquequeue
+	void clearOpaqueQueue();
 
 private:
 	//Queue of the entities to be rendered
-	std::queue<Entity*> mOpaqueRenderQueue;
+	std::deque<MovableObject*> mOpaqueRenderQueue;
 };
 

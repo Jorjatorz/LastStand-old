@@ -1,5 +1,7 @@
 #include "InputManager.h"
 
+#include "KeyboardEvent.h"
+#include "EventManager.h"
 #include "Root.h"
 
 InputManager::InputManager(SDL_Window* SDLWindow)
@@ -26,6 +28,7 @@ InputManager::~InputManager()
 void InputManager::processInputEvents()
 {
 	SDL_Event mEvent;
+	EventManager* eventManagerPtr = EventManager::getSingleton();
 	while (SDL_PollEvent(&mEvent))
 	{
 		if (mEvent.type == SDL_QUIT)
@@ -50,9 +53,19 @@ void InputManager::processInputEvents()
 		}
 
 		if (mEvent.type == SDL_KEYDOWN)
+		{
 			mKeyPressedArray[mEvent.key.keysym.scancode] = true;
+			//Create and throw the event
+			KeyboardEvent keyEvent = KeyboardEvent(mEvent.key.keysym.scancode);
+			eventManagerPtr->keyDownEvent(&keyEvent);
+		}
 
 		if (mEvent.type == SDL_KEYUP)
+		{
 			mKeyPressedArray[mEvent.key.keysym.scancode] = false;
+			//Create and throw the event
+			KeyboardEvent keyEvent = KeyboardEvent(mEvent.key.keysym.scancode);
+			eventManagerPtr->keyUpEvent(&keyEvent);
+		}
 	}
 }

@@ -1,5 +1,6 @@
 #include "RenderWindow.h"
 
+#include "Renderer.h"
 #include "Viewport.h"
 #include "InputManager.h"
 #include "DeferredFrameBuffer.h"
@@ -46,6 +47,9 @@ RenderWindow::RenderWindow(std::string windowName, int width, int height)
 	//Create the GBuffer
 	mGBuffer = new DeferredFrameBuffer("RenderWindow_GBuffer", mWidth, mHeight);
 
+	//Set default perspective matrix
+	mProjectionMatrix = Matrix4::createPerspectiveMatrix(60.0f, (float)mWidth, (float)mHeight, 0.001f, 1000.0f);
+
 	FE_LOG(FE_LOG::INFO, "Render Window created");
 }
 
@@ -80,6 +84,7 @@ void RenderWindow::swapBuffers()
 {
 	//Gl enbales
 	glEnable(GL_SCISSOR_TEST);
+	glEnable(GL_DEPTH_TEST);
 
 	//Bind the frameBuffer
 	mGBuffer->bindForGeometryPass();
@@ -91,6 +96,9 @@ void RenderWindow::swapBuffers()
 	}
 	//Clear the buffer each frame
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//Draw all the objects in the rendering queues
+	Renderer::getSingleton()->processOpaqueRenderingQueue(mProjectionMatrix);
 
 	mGBuffer->drawToScreenQuad(-1, 1, 1 ,-1);
 

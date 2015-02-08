@@ -9,14 +9,14 @@
 class Entity: public MovableObject
 {
 public:
-	Entity();
+	Entity(std::string name, std::string meshName);
 	~Entity();
 
 	//Renders the entity into the buffer
-	void drawToBuffer();
+	void rendersMovableObject(const Matrix4& PVMatrix);
 
 private:
-	//if true the entity will be rendered into the buffer
-	bool mVisible;
+	//Mesh attached to the entity
+	Mesh* mAttachedMesh;
 };
 

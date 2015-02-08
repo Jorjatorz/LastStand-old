@@ -24,7 +24,7 @@ bool Mesh::loadMesh(std::string meshPath)
 	}
 
 	//Process all the submeshes
-	for (int i = 0; i < mAiScene->mNumMeshes; ++i)
+	for (unsigned int i = 0; i < mAiScene->mNumMeshes; ++i)
 	{
 		aiMesh* loadedMesh = mAiScene->mMeshes[i];
 
@@ -36,7 +36,7 @@ bool Mesh::loadMesh(std::string meshPath)
 		newSubMesh.mTexCoordsVector.reserve(loadedMesh->mNumVertices * 2);
 		newSubMesh.mIndexVector.reserve(loadedMesh->mNumFaces * 3);
 
-		for (int j = 0; j < loadedMesh->mNumVertices; ++j)
+		for (unsigned int j = 0; j < loadedMesh->mNumVertices; ++j)
 		{
 			//create vertex array
 			const aiVector3D* vertex = &loadedMesh->mVertices[j]; //copy the vertices
@@ -64,7 +64,7 @@ bool Mesh::loadMesh(std::string meshPath)
 			}
 		}
 
-		for (int j = 0; j < loadedMesh->mNumFaces; ++j)
+		for (unsigned int j = 0; j < loadedMesh->mNumFaces; ++j)
 		{
 			//create index array
 			const aiFace* face = &loadedMesh->mFaces[j];
@@ -126,4 +126,17 @@ void Mesh::generateMeshComponentsBuffers(tMeshComponentsStruct& mMeshComp)
 	glGenBuffers(1, &mMeshComp.normalBuffer);
 	glGenBuffers(1, &mMeshComp.texCoordsBuffer);
 	glGenBuffers(1, &mMeshComp.indexBuffer);
+}
+
+void Mesh::renderAllSubMeshes()
+{
+	//For each submesh renders its vertex array to the buffer
+	foreach(subMesh, mSubMeshesComponentsList)
+	{
+		glBindVertexArray(subMesh->vertexArrayObject);
+
+		glDrawElements(GL_TRIANGLES, subMesh->mIndexVector.size(), GL_UNSIGNED_INT, 0);
+
+		glBindVertexArray(0);
+	}
 }

@@ -1,6 +1,6 @@
 #include "Renderer.h"
 
-#include "Entity.h"
+#include "MovableObject.h"
 
 Renderer::Renderer()
 {
@@ -11,11 +11,21 @@ Renderer::~Renderer()
 {
 }
 
-void Renderer::processOpaqueRenderingQueue()
+void Renderer::processOpaqueRenderingQueue(const Matrix4& PVMatrix)
 {
 	while (!mOpaqueRenderQueue.empty())
 	{
-		mOpaqueRenderQueue.front()->drawToBuffer();
-		mOpaqueRenderQueue.pop();
+		mOpaqueRenderQueue.front()->rendersMovableObject(PVMatrix);
+		mOpaqueRenderQueue.pop_front();
 	}
+}
+
+void Renderer::pushObjectToOpaqueQueue(MovableObject* obj)
+{
+	mOpaqueRenderQueue.push_back(obj);
+}
+
+void Renderer::clearOpaqueQueue()
+{
+	mOpaqueRenderQueue.clear();
 }

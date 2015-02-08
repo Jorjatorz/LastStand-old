@@ -22,6 +22,7 @@ public:
 	Matrix4 operator+(const Matrix4& other);
 	Matrix4 operator-(const Matrix4& other);
 	Matrix4 operator*(const Matrix4& other);
+	const Matrix4 operator*(const Matrix4& other) const;
 	Matrix4 operator/(const Matrix4& other);
 
 	//Return a matrix that is the inverse of itself
@@ -41,6 +42,12 @@ public:
 	void rotate(const Vector3& rotVec);
 	//Scales the matrix by a given vector value
 	void scale(const Vector3& scaleVec);
+
+	//Generates a perspective matrix
+	static Matrix4 createPerspectiveMatrix(float FOV, float width, float height, float zNear, float zFar);
+
+	//Return the constant address of the first element of the vector
+	const float* getValuePtr() const;
 
 private:
 	//Real matrix. Use GLM to do matrix calculations

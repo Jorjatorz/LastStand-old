@@ -1,8 +1,9 @@
 #include "SceneNode.h"
 
 #include "MovableObject.h"
+#include "SceneManager.h"
 
-SceneNode::SceneNode(std::string sceneNodeName, SceneNode* nodeParent)
+SceneNode::SceneNode(std::string sceneNodeName, SceneManager* manager, SceneNode* nodeParent)
 	:mName(sceneNodeName),
 	mParent(nodeParent),
 	mPosition(0.0),
@@ -12,7 +13,8 @@ SceneNode::SceneNode(std::string sceneNodeName, SceneNode* nodeParent)
 	mDerivedOrientation(0.0),
 	mDerivedScale(1.0),
 	mSceneNodeMatrix(1.0),
-	mDirty(true)
+	mDirty(true),
+	creator(manager)
 {
 	updateFromParent();
 }
@@ -23,12 +25,6 @@ SceneNode::~SceneNode(void)
 	deleteAllChilds();
 	//detach all objects
 	detachAllObjects();
-
-	//remove node from parent (if it has)
-	if (mParent != NULL)
-	{
-		mParent->deleteChildrenNode(this);
-	}
 }
 
 void SceneNode::setParentSceneNode(SceneNode* newParent)
@@ -49,7 +45,8 @@ SceneNode* SceneNode::createChildSceneNode(std::string name)
 	}
 
 	//else create a new one
-	SceneNode* newSceneNode = new SceneNode(name, this);
+	SceneNode* newSceneNode = new SceneNode(name, creator, this);
+	creator->addSceneNodeToScene(newSceneNode);
 
 	mChildNodesMap.insert(std::make_pair(name, newSceneNode));
 
@@ -68,6 +65,7 @@ SceneNode* SceneNode::createChildSceneNode(std::string name, SceneNode* newChild
 
 	//else insert it
 	mChildNodesMap.insert(std::make_pair(name, newChild));
+	creator->addSceneNodeToScene(newChild);
 
 	return newChild;
 }
@@ -83,7 +81,9 @@ SceneNode* SceneNode::createChildSceneNode(std::string name, Vector3 initialPosi
 	}
 
 	//else create a new one
-	SceneNode* newSceneNode = new SceneNode(name, this);
+	SceneNode* newSceneNode = new SceneNode(name, creator, this);
+	creator->addSceneNodeToScene(newSceneNode);
+
 	newSceneNode->setPosition(initialPosition);
 
 	mChildNodesMap.insert(std::make_pair(name, newSceneNode));
@@ -129,7 +129,7 @@ void SceneNode::attachObject(MovableObject* mNewObject)
 	}
 
 	mMovableObjectsMap.insert(std::make_pair(mNewObject->getName(), mNewObject));
-	mNewObject->setAttached(true);
+	mNewObject->attachToNode(this);
 }
 
 void SceneNode::detachObject(std::string objName)
@@ -137,7 +137,7 @@ void SceneNode::detachObject(std::string objName)
 	auto it = mMovableObjectsMap.find(objName);
 	if (it != mMovableObjectsMap.end())
 	{
-		it->second->setAttached(false);
+		it->second->attachToNode(NULL);
 		mMovableObjectsMap.erase(it);
 
 		return;
@@ -156,7 +156,7 @@ void SceneNode::detachAllObjects()
 {
 	foreach(obj, mMovableObjectsMap)
 	{
-		obj->second->setAttached(false);
+		obj->second->attachToNode(NULL);
 	}
 	mMovableObjectsMap.clear();
 }
@@ -254,7 +254,7 @@ void SceneNode::rotate(Vector3 axis, float angle)
 	}
 
 	//Create a quaternion from the matrix
-	mOrientation = Quaternion(rotationM);
+	mOrientation = mOrientation * Quaternion(rotationM);
 
 	mDirty = true;
 

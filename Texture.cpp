@@ -98,7 +98,7 @@ void Texture::generateTexture(unsigned int width, unsigned int height, GLint for
 	glGenTextures(1, &tex);
 
 	glBindTexture(GL_TEXTURE_2D, tex);
-	glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, GL_BGRA, GL_UNSIGNED_BYTE, pixels); //Free iamge loads in BGR
+	glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, GL_BGRA, GL_UNSIGNED_BYTE, pixels); //Free image loads in BGR
 
 	if (mipmap)
 	{

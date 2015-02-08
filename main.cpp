@@ -1,21 +1,14 @@
 #include "FEngine.h"
 
 #include "Root.h"
-#include "RenderWindow.h"
-#include "Viewport.h"
+#include "Pruebas.h"
 
 int main(int argc, char* argv[])
 {
 	//Create the root
 	Root* root = new Root();
 
-	//Initialize engine
-	RenderWindow* window = root->initEngine("Pruebas");
-
-	{
-		//Add a viewport
-		window->addViewport(0, 0, 1080, 720);
-	}
+	Pruebas p;
 
 	//Run the engine
 	root->runEngine();

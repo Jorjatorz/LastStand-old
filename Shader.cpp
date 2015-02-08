@@ -139,7 +139,7 @@ void Shader::unBind()
 }
 
 // sent texture value
-void Shader::UniformTexture(const std::string& uniformName, GLint activeTextureSlot)
+void Shader::uniformTexture(const std::string& uniformName, GLint activeTextureSlot)
 {
 	//glActiveTexture(GL_TEXTURE0+slot);
 	GLuint id = glGetUniformLocation(mProgram, uniformName.c_str());
@@ -150,7 +150,7 @@ void Shader::UniformTexture(const std::string& uniformName, GLint activeTextureS
 }
 
 // sent int value
-void Shader::Uniform(const std::string& uniformName, GLint value)
+void Shader::uniform(const std::string& uniformName, GLint value)
 {
 	GLuint id = glGetUniformLocation(mProgram, uniformName.c_str());
 	if (id == -1)
@@ -159,7 +159,7 @@ void Shader::Uniform(const std::string& uniformName, GLint value)
 }
 
 // sent float value
-void Shader::Uniform(const std::string& uniformName, GLfloat value)
+void Shader::uniform(const std::string& uniformName, GLfloat value)
 {
 	GLuint id = glGetUniformLocation(mProgram, uniformName.c_str());
 	if (id == -1)
@@ -167,10 +167,18 @@ void Shader::Uniform(const std::string& uniformName, GLfloat value)
 	glUniform1fARB(id, value);
 }
 
-void Shader::Uniform(const std::string& uniformName, const Vector3& value)
+void Shader::uniform(const std::string& uniformName, const Vector3& value)
 {
 	GLuint id = glGetUniformLocation(mProgram, uniformName.c_str());
 	if (id == -1)
 		FE_LOG(FE_LOG::WARNING, mName + " Couldn't get uniform location of " + uniformName);
 	glUniform3fvARB(id, 1, value.getValuePtr());
+}
+
+void Shader::uniformMatrix(const std::string & uniformName, const Matrix4& value)
+{
+	GLuint id = glGetUniformLocation(mProgram, uniformName.c_str());
+	if (id == -1)
+		FE_LOG(FE_LOG::WARNING, mName + " Couldn't get uniform location of " + uniformName);
+	glUniformMatrix4fvARB(id, 1, false, value.getValuePtr());
 }
