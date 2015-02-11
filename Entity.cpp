@@ -8,8 +8,7 @@
 Entity::Entity(std::string name, std::string meshName)
 	:MovableObject(name, MovableObject::RENDERABLE)
 {
-	//Load the mesh, in a future this can be added to a queue instead of loading the mesh when creating the entity
-	mAttachedMesh = ResourceManager::getSingleton()->loadMeshIntoMemory(meshName);
+	attachNewMesh(meshName);
 }
 
 
@@ -20,11 +19,20 @@ Entity::~Entity()
 void Entity::rendersMovableObject(const Matrix4& PVMatrix)
 {
 	//Bind material shader...
-	ResourceManager::getSingleton()->getShaderInMemory("basicObject")->bind();
-	ResourceManager::getSingleton()->getShaderInMemory("basicObject")->uniformMatrix("MVP", PVMatrix * mAttachedSceneNode->getSceneNodeMatrix());
+	Shader* renderShader = ResourceManager::getSingleton()->getShaderInMemory("basicObject");
+	renderShader->bind();
+
+	renderShader->uniformMatrix("MVP", PVMatrix * mAttachedSceneNode->getSceneNodeMatrix());
+	renderShader->uniformMatrix("NormalM", mAttachedSceneNode->getSceneNodeMatrix().getInverseMatrix().getTransposeMatrix());
 
 	//Render the mesh
 	mAttachedMesh->renderAllSubMeshes();
 
 	Shader::unBind();
+}
+
+void Entity::attachNewMesh(std::string meshName)
+{
+	//Load the mesh, in a future this can be added to a queue instead of loading the mesh when creating the entity
+	mAttachedMesh = ResourceManager::getSingleton()->loadMeshIntoMemory(meshName);
 }

@@ -83,6 +83,15 @@ Shader* ResourceManager::getShaderInMemory(std::string shaderName)
 	return it->second;
 }
 
+void ResourceManager::reloadAllShadersFromFiles()
+{
+	FE_LOG(FE_LOG::INFO, "Reloading all the shaders from its file");
+	foreach(shader, mShaderMap)
+	{
+		shader->second->loadShader("Data\\Shaders\\" + shader->first);
+	}
+}
+
 Texture* ResourceManager::loadTextureIntoMemoryFromFile(std::string textureName)
 {
 	FE_LOG(FE_LOG::INFO, "Loading Texture " + textureName);

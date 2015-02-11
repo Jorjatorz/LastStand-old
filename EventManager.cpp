@@ -14,6 +14,7 @@ EventManager::~EventManager()
 
 void EventManager::registerEventListener(EventListener* listener)
 {
+	//FOR FUTURE, CHECK IF THE LISTENER ALREADY EXISTS
 	listener->setRegisteredForEvents(true);
 
 	mEventListenerList.push_back(listener);
@@ -34,5 +35,23 @@ void EventManager::keyUpEvent(const KeyboardEvent* eventTriggered)
 	foreach(listener, mEventListenerList)
 	{
 		(*listener)->onKeyUpEvent(eventTriggered);
+	}
+}
+
+void EventManager::frameStartedEvent()
+{
+	//Notify to all the listeners
+	foreach(listener, mEventListenerList)
+	{
+		(*listener)->onFrameStartedEvent();
+	}
+}
+
+void EventManager::frameEndededEvent()
+{
+	//Notify to all the listeners
+	foreach(listener, mEventListenerList)
+	{
+		(*listener)->onFrameEndedEvent();
 	}
 }

@@ -21,29 +21,6 @@ FE_LOG::FE_LOG(tLogType lType, std::string mesage)
 	}
 }
 
-FE_LOG::FE_LOG(tLogType lType, std::string mesage, float num)
-{
-	//Look for the correct type and print it
-	if (lType == tLogType::INFO)
-	{
-		printInfo();
-		printf(mesage.c_str(), num);
-		std::cout << std::endl;
-	}
-	else if (lType == tLogType::WARNING)
-	{
-		printWarning();
-		printf(mesage.c_str(), num);
-		std::cout << std::endl;
-	}
-	else
-	{
-		printError();
-		printf(mesage.c_str(), num);
-		std::cout << std::endl;
-	}
-}
-
 
 FE_LOG::~FE_LOG()
 {

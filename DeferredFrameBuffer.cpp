@@ -10,7 +10,7 @@ DeferredFrameBuffer::DeferredFrameBuffer(std::string name, int width, int height
 	//Color Texture. Attachment 0
 	addTexture("DeferredFrameBufferText_Color", GL_RGBA8);
 	//Normal Texture. Attachment 1
-	addTexture("DeferredFrameBufferText_Normal", GL_RGBA8);
+	addTexture("DeferredFrameBufferText_Normals", GL_RGBA8);
 	//Light Texture. Attachment 2
 	addTexture("DeferredFrameBufferText_Light", GL_RGBA8);
 
@@ -93,15 +93,20 @@ void DeferredFrameBuffer::drawToScreenQuad(float startX, float startY, float end
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	//Bind shader
-	ResourceManager::getSingleton()->getShaderInMemory("DeferredShading_Combination")->bind();
+	Shader* combinationShader = ResourceManager::getSingleton()->getShaderInMemory("DeferredShading_Combination");
+	combinationShader->bind();
 
 	glDisable(GL_DEPTH_TEST);
 
 	glBindVertexArray(screenQuadVAO);
-
+	//Bind color texture
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, mTextureMap.find("DeferredFrameBufferText_Color")->second->getTextureId());
-	ResourceManager::getSingleton()->getShaderInMemory("DeferredShading_Combination")->uniformTexture("colorTex", 0);
+	combinationShader->uniformTexture("colorTex", 0);
+	//Bind normals texture
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, mTextureMap.find("DeferredFrameBufferText_Normals")->second->getTextureId());
+	combinationShader->uniformTexture("normalsTex", 1);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 

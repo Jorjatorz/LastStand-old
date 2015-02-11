@@ -22,6 +22,14 @@ public:
 	virtual void onKeyUpEvent(const KeyboardEvent* eventTriggered)
 	{
 	}
+	//When a frame is started
+	virtual void onFrameStartedEvent()
+	{
+	}
+	//When a frame is ended
+	virtual void onFrameEndedEvent()
+	{
+	}
 
 private:
 	bool mRegistered;

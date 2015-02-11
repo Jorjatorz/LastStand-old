@@ -15,9 +15,6 @@
     <Filter Include="Header Files\Math">
       <UniqueIdentifier>{991eb596-5999-4e45-a799-2830f1efb76f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Events">
-      <UniqueIdentifier>{5beb70a9-6f51-4529-b4c1-354f48a49758}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Events">
       <UniqueIdentifier>{07dd30b7-38d4-4938-add4-e23027a793af}</UniqueIdentifier>
     </Filter>
@@ -27,6 +24,9 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Events">
+      <UniqueIdentifier>{5beb70a9-6f51-4529-b4c1-354f48a49758}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +107,12 @@
     </ClCompile>
     <ClCompile Include="Pruebas.cpp">
       <Filter>COSAS MIAS</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +196,12 @@
     </ClInclude>
     <ClInclude Include="Pruebas.h">
       <Filter>COSAS MIAS</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

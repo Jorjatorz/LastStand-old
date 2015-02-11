@@ -20,8 +20,30 @@ public:
 
 	//Prints a text into the console, depending on the type it will show an info, warning or error text.
 	FE_LOG(tLogType lType, std::string mesage);
-	//Prints a text with a float number into the console, depending on the type it will show an info, warning or error text.
-	FE_LOG(tLogType lType, std::string mesage, float num);
+	//Prints a text with a number into the console, depending on the type it will show an info, warning or error text.
+	template <typename T>
+	FE_LOG(tLogType lType, std::string mesage, T num)
+	{
+		//Look for the correct type and print it
+		if (lType == tLogType::INFO)
+		{
+			printInfo();
+			printf(mesage.c_str(), num);
+			std::cout << std::endl;
+		}
+		else if (lType == tLogType::WARNING)
+		{
+			printWarning();
+			printf(mesage.c_str(), num);
+			std::cout << std::endl;
+		}
+		else
+		{
+			printError();
+			printf(mesage.c_str(), num);
+			std::cout << std::endl;
+		}
+	}
 
 	~FE_LOG();
 

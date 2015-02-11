@@ -24,6 +24,12 @@ public:
 		return mSceneManager;
 	}
 
+	//Return the last frame delay
+	float getLastFrameDelayInSeconds()
+	{
+		return mLastFrameDelay / 1000.0;
+	}
+
 private:
 	//Pointer to the render window (created by the Root)
 	RenderWindow* mRenderWindow;
@@ -35,5 +41,9 @@ private:
 	Renderer* mRenderer;
 	//Pointer to the eventManager (created by the Root)
 	EventManager* mEventManager;
+	//Pointer to the timerManager (created by the Root)
+	TimerManager* mTimerManager;
+	Timer* mEngineTimer; //Timer that holds the time that the engine has beeing executed, incharge of reguling fps
+	int mLastFrameDelay; //Value that holds the time that the time last frame took
 };
 

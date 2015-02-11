@@ -10,5 +10,6 @@ public:
 
 	void onKeyDownEvent(const KeyboardEvent* eventTriggered);
 	void onKeyUpEvent(const KeyboardEvent* eventTriggered);
+	void onFrameStartedEvent();
 };
 

@@ -17,6 +17,8 @@ public:
 	void deleteShaderFromMemory(std::string shaderName);
 	//Return the shader stored in memory
 	Shader* getShaderInMemory(std::string shaderName);
+	//Reload all the shaders from his file
+	void reloadAllShadersFromFiles();
 
 	//Load a new Texture into the memory
 	Texture* loadTextureIntoMemoryFromFile(std::string textureName);

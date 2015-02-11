@@ -7,7 +7,7 @@ Viewport::Viewport(const int& x, const int& y, const int& width, const int& heig
 	mWidth(width),
 	mHeight(height),
 	isDirty(true),
-	mClearColor(0.5) //Grey
+	mClearColor(0) //Grey
 {
 }
 

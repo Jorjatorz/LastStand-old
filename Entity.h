@@ -15,6 +15,9 @@ public:
 	//Renders the entity into the buffer
 	void rendersMovableObject(const Matrix4& PVMatrix);
 
+	//Attach a mesh to the entity
+	void attachNewMesh(std::string meshName);
+
 private:
 	//Mesh attached to the entity
 	Mesh* mAttachedMesh;

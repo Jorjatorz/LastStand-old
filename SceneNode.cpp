@@ -1,5 +1,6 @@
 #include "SceneNode.h"
 
+#include "Root.h"
 #include "MovableObject.h"
 #include "SceneManager.h"
 
@@ -175,7 +176,7 @@ void SceneNode::updateFromParent()
 		updateChildrens();
 		//update matrix
 		mSceneNodeMatrix.translate(mDerivedPosition);
-		mSceneNodeMatrix = mSceneNodeMatrix * mOrientation.toMat4();
+		mSceneNodeMatrix = mSceneNodeMatrix * mDerivedOrientation.toMat4();
 		mSceneNodeMatrix.scale(mDerivedScale);
 	}
 
@@ -208,7 +209,7 @@ void SceneNode::processDerivedOrientation()
 	//if we have parent
 	if (mParent != NULL)
 	{
-		mDerivedOrientation = mParent->mDerivedOrientation + mOrientation;
+		mDerivedOrientation = mParent->mDerivedOrientation * mOrientation;
 	}
 	else
 	{
@@ -231,7 +232,7 @@ void SceneNode::processDerivedScale()
 
 void SceneNode::translate(Vector3 trans)
 {
-	mPosition += trans;// *mSceneManager->mDeltaTime;
+	mPosition += trans * Root::getSingleton()->getLastFrameDelayInSeconds();// *mSceneManager->mDeltaTime;
 
 	mDirty = true;
 
@@ -250,7 +251,7 @@ void SceneNode::rotate(Vector3 axis, float angle)
 	Matrix4 rotationM;
 	if (axis != Vector3(0.0)) //Just in case
 	{
-		rotationM.rotate(angle, axis);
+		rotationM.rotate(angle * Root::getSingleton()->getLastFrameDelayInSeconds(), axis);
 	}
 
 	//Create a quaternion from the matrix
@@ -264,7 +265,7 @@ void SceneNode::rotate(Vector3 axis, float angle)
 
 void SceneNode::scale(Vector3 axis)
 {
-	mScale += axis;
+	mScale += axis * Root::getSingleton()->getLastFrameDelayInSeconds();
 
 	mDirty = true;
 

@@ -15,6 +15,8 @@ public:
 	void registerEventListener(EventListener* listener);
 
 	//Sends the specific event to all frameListeners
+	void frameStartedEvent();
+	void frameEndededEvent();
 	void keyDownEvent(const KeyboardEvent* eventTriggered);
 	void keyUpEvent(const KeyboardEvent* eventTriggered);
 	void mouseEvent(const Event* eventTriggered);

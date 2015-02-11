@@ -28,6 +28,7 @@ RenderWindow::RenderWindow(std::string windowName, int width, int height)
 	SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	SDL_GL_SetSwapInterval(0); //Disable VSync
 
 	glewExperimental = GL_TRUE;
 	glewInit();
@@ -86,24 +87,26 @@ void RenderWindow::swapBuffers()
 	glEnable(GL_SCISSOR_TEST);
 	glEnable(GL_DEPTH_TEST);
 
-	//Bind the frameBuffer
-	mGBuffer->bindForGeometryPass();
-
 	//Set the viewport if needed
 	foreach(vp, mViewportList)
 	{
 		(*vp)->updateViewport();
+
+		//Bind the frameBuffer
+		mGBuffer->bindForGeometryPass();
+
+		//Clear the buffer each frame
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		//Draw all the objects in the rendering queues
+		Renderer::getSingleton()->processOpaqueRenderingQueue(mProjectionMatrix);
+
+		mGBuffer->drawToScreenQuad(-1, 1, 1, -1);
+
+		//Unbind the frameBuffer
+		mGBuffer->unBind();
 	}
-	//Clear the buffer each frame
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	//Draw all the objects in the rendering queues
-	Renderer::getSingleton()->processOpaqueRenderingQueue(mProjectionMatrix);
-
-	mGBuffer->drawToScreenQuad(-1, 1, 1 ,-1);
-
-	//Unbind the frameBuffer
-	mGBuffer->unBind();
+	
 
 	SDL_GL_SwapWindow(mSDLWindow);
 }
