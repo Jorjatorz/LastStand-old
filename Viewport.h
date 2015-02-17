@@ -17,13 +17,19 @@ class Viewport
 	Vector3 mClearColor;
 
 public:
-	Viewport(const int& x, const int& y, const int& width, const int& height);
+	Viewport(const int& x, const int& y, const int& width, const int& height, Camera* cam);
 	~Viewport();
 
 	//Check if the viewport is dirty and if it's update it.
 	void updateViewport();
 
+	//Return the viewmatrix of the camera attached to the viewport
+	Matrix4 getViewportCameraMatrix();
+
 	//Change the clear color
 	void setClearColor(const Vector3& newColor);
+
+private:
+	Camera* mAttachedCamera;
 };
 

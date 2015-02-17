@@ -48,8 +48,11 @@ public:
 
 	//transformations functions
 	void translate(Vector3 trans);
-	void rotate(Vector3 axis, float angle);
+	void rotate(const Vector3& axis, float angle);
 	void scale(Vector3 axis);
+	void roll(float amount); //Rotate on X axis, amount in degrees
+	void yaw(float amount); //Rotate on Y axis, amount in degrees
+	void pitch(float amount); //Rotate on Z axis, amount in degrees
 	void setPosition(Vector3 newPos);
 	void setOrientation(Quaternion newOrientation);
 	void setScale(Vector3 newScale);
@@ -75,17 +78,29 @@ public:
 	}
 	Vector3 getDerivedPosition()
 	{
-		processDerivedPosition();
+		if (mDirty || mParent->mDirty)
+		{
+			processDerivedPosition();
+		}
+
 		return mDerivedPosition;
 	}
 	Quaternion getDerivedOrientation()
 	{
-		processDerivedOrientation();
+		if (mDirty || mParent->mDirty)
+		{
+			processDerivedOrientation();
+		}
+
 		return mDerivedOrientation;
 	}
 	Vector3 getDerivedScale()
 	{
-		processDerivedScale();
+		if (mDirty || mParent->mDirty)
+		{
+			processDerivedScale();
+		}
+
 		return mDerivedScale;
 	}
 

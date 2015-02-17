@@ -18,9 +18,12 @@ public:
 	//Operator overloading
 	Quaternion& operator=(const Quaternion& other);
 	bool operator==(const Quaternion& other) const;
+	bool operator!=(const Quaternion& other) const;
 
 	Quaternion operator+(const Quaternion& other);
 	Quaternion operator*(const Quaternion& other);
+
+	Quaternion operator-();
 
 	//Transform the quaternion into a matrix
 	Matrix4 toMat4();

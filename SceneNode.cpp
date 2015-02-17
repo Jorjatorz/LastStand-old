@@ -164,14 +164,14 @@ void SceneNode::detachAllObjects()
 
 void SceneNode::updateFromParent()
 {
-	processDerivedPosition();
-	processDerivedOrientation();
-	processDerivedScale();
-
 	//if the node position has changed or the derived positon (thus the parent) has changed modify the sceneNodeMatrix
 	if (mDirty || mParent->mDirty)
 	{
 		mSceneNodeMatrix = Matrix4(1.0);
+
+		processDerivedPosition();
+		processDerivedOrientation();
+		processDerivedScale();
 
 		updateChildrens();
 		//update matrix
@@ -240,7 +240,7 @@ void SceneNode::translate(Vector3 trans)
 	updateFromParent();
 }
 
-void SceneNode::rotate(Vector3 axis, float angle)
+void SceneNode::rotate(const Vector3& axis, float angle)
 {
 	/*Quaternion q;
 	q = glm::angleAxis(angle, axis); //Suppose angle is in degrees
@@ -272,6 +272,22 @@ void SceneNode::scale(Vector3 axis)
 	//Scale has changed so we update all
 	updateFromParent();
 }
+
+void SceneNode::roll(float amount)
+{
+	rotate(Vector3(0.0, 1.0, 0.0), amount);
+}
+
+void SceneNode::yaw(float amount)
+{
+	rotate(Vector3(0.0, 1.0, 0.0), amount);
+}
+
+void SceneNode::pitch(float amount)
+{
+	rotate(Vector3(0.0, 1.0, 0.0), amount);
+}
+
 
 void SceneNode::lookAt(Vector3 lookAtPoint, Vector3 objectFacing)
 {

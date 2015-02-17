@@ -22,12 +22,15 @@ public:
 	Vector3 operator+(const Vector3& other);
 	Vector3 operator-(const Vector3& other);
 	Vector3 operator*(const Vector3& other);
+	const Vector3 operator*(const Vector3& other) const;
 	Vector3 operator/(const Vector3& other);
 
 	Vector3 operator+(const float& n);
 	Vector3 operator-(const float& n);
 	Vector3 operator*(const float& n);
 	Vector3 operator/(const float& n);
+
+	Vector3 operator-();
 
 	//Return the constant address of the first element of the vector
 	const float* getValuePtr() const;

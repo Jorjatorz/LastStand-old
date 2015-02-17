@@ -90,6 +90,16 @@ Vector3 Vector3::operator*(const Vector3& other)
 	result.z = z * other.z;
 	return result;
 }
+
+const Vector3 Vector3::operator*(const Vector3& other) const
+{
+	Vector3 result;
+	result.x = x * other.x;
+	result.y = y * other.y;
+	result.z = z * other.z;
+	return result;
+}
+
 Vector3 Vector3::operator/(const Vector3& other)
 {
 	Vector3 result;
@@ -135,4 +145,10 @@ Vector3 Vector3::operator/(const float& n)
 const float* Vector3::getValuePtr() const
 {
 	return &x;
+}
+
+Vector3 Vector3::operator-()
+{
+	Vector3 newVec(-x, -y, -z);
+	return newVec;
 }

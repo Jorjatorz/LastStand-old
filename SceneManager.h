@@ -25,6 +25,13 @@ public:
 	//Return a entity already created
 	Entity* getEntity(std::string entityName);
 
+	//Creates a new camera
+	Camera* createCamera(std::string cameraName);
+	//Deletes a camera
+	void deleteCamera(std::string cameraName);
+	//Returns a camera
+	Camera* getCamera(std::string cameraName);
+
 private:
 	//Root scenenode for the whoel scene. Created in the constructor
 	SceneNode* mRootSceneNode;
@@ -33,5 +40,7 @@ private:
 	std::unordered_map<std::string, SceneNode*> mSceneNodeMap;
 	//Map containing all the entities
 	std::unordered_map<std::string, Entity*> mEntityMap;
+	//Map containing all the camera
+	std::unordered_map<std::string, Camera*> mCameraMap;
 };
 

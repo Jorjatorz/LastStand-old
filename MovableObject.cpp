@@ -5,7 +5,7 @@ MovableObject::MovableObject(std::string name, tTypeEnum type)
 	:mName(name),
 	mType(type),
 	mVisible(true),
-	mAttachedSceneNode(NULL)
+	mParentSceneNode(NULL)
 {
 }
 
@@ -16,5 +16,5 @@ MovableObject::~MovableObject()
 
 void MovableObject::attachToNode(SceneNode* node)
 {
-	mAttachedSceneNode = node;
+	mParentSceneNode = node;
 }

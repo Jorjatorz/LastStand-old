@@ -26,6 +26,7 @@
 #include "Quaternion.h"
 #include "Vector3.h"
 
+class Camera;
 class DeferredFrameBuffer;
 class Entity;
 class Event;

@@ -22,7 +22,7 @@ public:
 	void swapBuffers();
 
 	//Creates and add a viewport to the RenderWindow
-	Viewport* addViewport(const int& originX = 0, const int& originY = 0, const int& width = 1080, const int& height = 720);
+	Viewport* addViewport(Camera* cam, const int& originX = 0, const int& originY = 0, const int& width = 1080, const int& height = 720);
 
 private:
 	//SDL Staff

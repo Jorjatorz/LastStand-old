@@ -22,8 +22,8 @@ void Entity::rendersMovableObject(const Matrix4& PVMatrix)
 	Shader* renderShader = ResourceManager::getSingleton()->getShaderInMemory("basicObject");
 	renderShader->bind();
 
-	renderShader->uniformMatrix("MVP", PVMatrix * mAttachedSceneNode->getSceneNodeMatrix());
-	renderShader->uniformMatrix("NormalM", mAttachedSceneNode->getSceneNodeMatrix().getInverseMatrix().getTransposeMatrix());
+	renderShader->uniformMatrix("MVP", PVMatrix * mParentSceneNode->getSceneNodeMatrix());
+	renderShader->uniformMatrix("NormalM", mParentSceneNode->getSceneNodeMatrix().getInverseMatrix().getTransposeMatrix());
 
 	//Render the mesh
 	mAttachedMesh->renderAllSubMeshes();

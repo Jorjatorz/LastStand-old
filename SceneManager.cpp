@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 
+#include "Camera.h"
 #include "Entity.h"
 #include "Renderer.h"
 #include "SceneNode.h"
@@ -116,6 +117,46 @@ SceneNode* SceneManager::getSceneNode(std::string name)
 	if (it == mSceneNodeMap.end())
 	{
 		FE_LOG(FE_LOG::ERR, "Can't find that scenenode, it doesn't exists: " + name);
+		assert(0);
+	}
+
+	return it->second;
+}
+
+Camera* SceneManager::createCamera(std::string cameraName)
+{
+	auto it = mCameraMap.find(cameraName);
+	if (it != mCameraMap.end())
+	{
+		FE_LOG(FE_LOG::ERR, "Can't create a new camera, it alreaady exists: " + cameraName);
+		assert(0);
+	}
+
+	Camera* newCamera = new Camera(cameraName);
+	mCameraMap.insert(std::make_pair(cameraName, newCamera));
+
+	return newCamera;
+}
+
+void SceneManager::deleteCamera(std::string cameraName)
+{
+	auto it = mCameraMap.find(cameraName);
+	if (it == mCameraMap.end())
+	{
+		FE_LOG(FE_LOG::ERR, "Can't delete the camera, it doesn't exists: " + cameraName);
+		assert(0);
+	}
+
+	delete it->second;
+	mCameraMap.erase(it);
+}
+
+Camera* SceneManager::getCamera(std::string cameraName)
+{
+	auto it = mCameraMap.find(cameraName);
+	if (it == mCameraMap.end())
+	{
+		FE_LOG(FE_LOG::ERR, "Can't return the camera, it doesn't exists: " + cameraName);
 		assert(0);
 	}
 

@@ -1,5 +1,6 @@
 #include "Pruebas.h"
 
+#include "Camera.h"
 #include "TimerManager.h"
 #include "Entity.h"
 #include "SceneManager.h"
@@ -16,8 +17,11 @@ Pruebas::Pruebas()
 	//Initialize engine
 	RenderWindow* window = Root::getSingleton()->initEngine("Pruebas");
 
+	//Create camera
+	Camera* cam = Root::getSingleton()->getSceneManager()->createCamera("viewCamera");
+
 	//Add a viewport
-	window->addViewport(0, 0, 1080, 720);
+	window->addViewport(cam, 0, 0, 1080, 720);
 
 	Entity* ent = Root::getSingleton()->getSceneManager()->createEntity("a", "Guard.obj");
 	SceneNode* node = Root::getSingleton()->getSceneManager()->getRootSceneNode()->createChildSceneNode("a");
@@ -72,8 +76,7 @@ void Pruebas::onKeyDownEvent(const KeyboardEvent* eventTriggered)
 
 	if (eventTriggered->mPressedKey == KEYBOARD::H)
 	{
-		Root::getSingleton()->getSceneManager()->getEntity("a")->attachNewMesh("Box.obj");
-		Root::getSingleton()->getSceneManager()->getSceneNode("a")->setScale(Vector3(0.25));
+		Root::getSingleton()->getSceneManager()->getCamera("viewCamera")->setPosition(Vector3(1.0, 0.0, 0.0));
 	}
 }
 void Pruebas::onKeyUpEvent(const KeyboardEvent* eventTriggered)
@@ -94,11 +97,11 @@ void Pruebas::onFrameStartedEvent()
 {
 	if (w)
 	{ 
-		Root::getSingleton()->getSceneManager()->getSceneNode("a")->translate(Vector3(0.0, 0.0, -1.00));
+		Root::getSingleton()->getSceneManager()->getCamera("viewCamera")->translate(Vector3(0.0, 0.0, -1.0));
 	}
 
 	if (d)
 	{
-		Root::getSingleton()->getSceneManager()->getSceneNode("a")->rotate(Vector3(0.0, 1.0, 0.0), 90);
+		Root::getSingleton()->getSceneManager()->getSceneNode("a")->yaw(90);
 	}
 }

@@ -29,6 +29,11 @@ bool Quaternion::operator==(const Quaternion& other) const
 	return mGLMQuat == other.mGLMQuat;
 }
 
+bool Quaternion::operator!=(const Quaternion& other) const
+{
+	return mGLMQuat != other.mGLMQuat;
+}
+
 Quaternion Quaternion::operator+(const Quaternion& other)
 {
 	Quaternion quat;
@@ -49,4 +54,13 @@ Matrix4 Quaternion::toMat4()
 	mat.mGLMMatrix = glm::toMat4(mGLMQuat);
 
 	return mat;
+}
+
+Quaternion Quaternion::operator-()
+{
+	Quaternion newQuat;
+
+	newQuat.mGLMQuat = -mGLMQuat;
+
+	return newQuat;
 }

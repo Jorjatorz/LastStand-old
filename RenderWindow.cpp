@@ -99,7 +99,7 @@ void RenderWindow::swapBuffers()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//Draw all the objects in the rendering queues
-		Renderer::getSingleton()->processOpaqueRenderingQueue(mProjectionMatrix);
+		Renderer::getSingleton()->processOpaqueRenderingQueue(mProjectionMatrix * (*vp)->getViewportCameraMatrix());
 
 		mGBuffer->drawToScreenQuad(-1, 1, 1, -1);
 
@@ -111,10 +111,10 @@ void RenderWindow::swapBuffers()
 	SDL_GL_SwapWindow(mSDLWindow);
 }
 
-Viewport* RenderWindow::addViewport(const int& originX, const int& originY, const int& width, const int& height)
+Viewport* RenderWindow::addViewport(Camera* cam, const int& originX, const int& originY, const int& width, const int& height)
 {
 	//Create and save the new viewport
-	Viewport* vp = new Viewport(originX, originY, width, height);
+	Viewport* vp = new Viewport(originX, originY, width, height, cam);
 	mViewportList.push_back(vp);
 
 	return vp;

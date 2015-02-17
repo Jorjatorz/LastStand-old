@@ -10,7 +10,8 @@ public:
 
 	typedef enum
 	{
-		RENDERABLE //ProcessMovable -> renders the object (bind the opengl buffers)
+		RENDERABLE, //rendersMovableObject -> renders the object (bind the opengl buffers)
+		CAMERA //rendersMovableObject -> nothing
 	}tTypeEnum;
 
 	MovableObject(std::string name, tTypeEnum type);
@@ -32,7 +33,7 @@ public:
 	void attachToNode(SceneNode* node);
 	bool isAttached()
 	{
-		return mAttachedSceneNode != NULL;
+		return mParentSceneNode != NULL;
 	}
 
 	//True if the object is visible
@@ -45,7 +46,7 @@ protected:
 	//MovableObject name
 	std::string mName;
 	//True if attached to a scenenode
-	SceneNode* mAttachedSceneNode;
+	SceneNode* mParentSceneNode;
 private:
 	//MovableObject type
 	tTypeEnum mType;
