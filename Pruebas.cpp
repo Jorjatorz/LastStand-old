@@ -11,8 +11,14 @@
 #include "RenderWindow.h"
 #include "EventManager.h"
 #include "KeyboardEvent.h"
+#include "MouseEvent.h"
+#include "InputManager.h"
 
 Pruebas::Pruebas()
+	:transW(false),
+	transS(false),
+	transA(false),
+	transD(false)
 {
 	//Initialize engine
 	RenderWindow* window = Root::getSingleton()->initEngine("Pruebas");
@@ -42,8 +48,7 @@ Pruebas::Pruebas()
 Pruebas::~Pruebas()
 {
 }
-bool w = false;
-bool d = false;
+
 void Pruebas::onKeyDownEvent(const KeyboardEvent* eventTriggered)
 {
 	if (eventTriggered->mPressedKey == KEYBOARD::ESCAPE)
@@ -53,55 +58,98 @@ void Pruebas::onKeyDownEvent(const KeyboardEvent* eventTriggered)
 
 	if (eventTriggered->mPressedKey == KEYBOARD::W)
 	{
-		w = true;
+		transW = true;
 	}
 	else if (eventTriggered->mPressedKey == KEYBOARD::S)
 	{
-		Root::getSingleton()->getSceneManager()->getSceneNode("a")->setPosition(Vector3(0.0, 0.0, -1.0));
+		transS = true;
 	}
 
 	if (eventTriggered->mPressedKey == KEYBOARD::D)
 	{
-		d = true;
+		transD = true;
 	}
 	else if (eventTriggered->mPressedKey == KEYBOARD::A)
 	{
-		Root::getSingleton()->getSceneManager()->getSceneNode("a")->setOrientation(Quaternion());
+		transA = true;
 	}
 
 	if (eventTriggered->mPressedKey == KEYBOARD::G)
 	{
 		ResourceManager::getSingleton()->reloadAllShadersFromFiles();
 	}
-
-	if (eventTriggered->mPressedKey == KEYBOARD::H)
-	{
-		Root::getSingleton()->getSceneManager()->getCamera("viewCamera")->setPosition(Vector3(1.0, 0.0, 0.0));
-	}
 }
 void Pruebas::onKeyUpEvent(const KeyboardEvent* eventTriggered)
 {
 	if (eventTriggered->mPressedKey == KEYBOARD::W)
 	{
-		w = false;
+		transW = false;
+	}
+	else if (eventTriggered->mPressedKey == KEYBOARD::S)
+	{
+		transS = false;
 	}
 
 	if (eventTriggered->mPressedKey == KEYBOARD::D)
 	{
-		d = false;
+		transD = false;
+	}
+	else if (eventTriggered->mPressedKey == KEYBOARD::A)
+	{
+		transA = false;
+	}
+}
+
+bool a = false;
+void Pruebas::onMouseEvent(const MouseEvent* eventTriggered)
+{
+	if (eventTriggered->mButtonActionType == MouseEvent::BUTTON_DOWN)
+	{
+		if (eventTriggered->mButton == MOUSE::LEFT)
+		{
+			a = true;
+		}
+	}
+
+
+	if (eventTriggered->mButtonActionType == MouseEvent::BUTTON_UP)
+	{
+		if (eventTriggered->mButton == MOUSE::LEFT)
+		{
+			a = false;
+		}
 	}
 }
 
 
 void Pruebas::onFrameStartedEvent()
 {
-	if (w)
-	{ 
-		Root::getSingleton()->getSceneManager()->getCamera("viewCamera")->translate(Vector3(0.0, 0.0, -1.0));
+	if (transW)
+	{
+		Root::getSingleton()->getSceneManager()->getCamera("viewCamera")->translate(Vector3(0.0, 0.0, -5.0));
+	}
+	else if (transS)
+	{
+		Root::getSingleton()->getSceneManager()->getCamera("viewCamera")->translate(Vector3(0.0, 0.0, 5.0));
 	}
 
-	if (d)
+	if (transA)
 	{
-		Root::getSingleton()->getSceneManager()->getSceneNode("a")->yaw(90);
+		Root::getSingleton()->getSceneManager()->getCamera("viewCamera")->translate(Vector3(-5.0, 0.0, 0.0));
+	}
+	else if (transD)
+	{
+		Root::getSingleton()->getSceneManager()->getCamera("viewCamera")->translate(Vector3(5.0, 0.0, 0.0));
+	}
+
+	if (a)
+	{
+		Root::getSingleton()->getSceneManager()->getCamera("viewCamera")->yaw(1 * 180 / 3.14);
+
+		Quaternion quat = Root::getSingleton()->getSceneManager()->getCamera("viewCamera")->getOrientation();
+		Vector3 finalOrientation = Math::toEulerAngles(quat);
+
+		std::cout << quat.getW() << " " << quat.getX() << " " << quat.getY() << " " << quat.getZ() << std::endl;
+		//std::cout << finalOrientation.x << " " << finalOrientation.y << " " << finalOrientation.z << std::endl;
 	}
 }

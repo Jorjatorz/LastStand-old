@@ -11,7 +11,7 @@ SceneNode::SceneNode(std::string sceneNodeName, SceneManager* manager, SceneNode
 	mOrientation(),
 	mScale(1.0),
 	mDerivedPosition(0.0),
-	mDerivedOrientation(0.0),
+	mDerivedOrientation(),
 	mDerivedScale(1.0),
 	mSceneNodeMatrix(1.0),
 	mDirty(true),
@@ -176,7 +176,7 @@ void SceneNode::updateFromParent()
 		updateChildrens();
 		//update matrix
 		mSceneNodeMatrix.translate(mDerivedPosition);
-		mSceneNodeMatrix = mSceneNodeMatrix * mDerivedOrientation.toMat4();
+		mSceneNodeMatrix = mSceneNodeMatrix * Math::toMat4(mDerivedOrientation);
 		mSceneNodeMatrix.scale(mDerivedScale);
 	}
 
@@ -248,19 +248,17 @@ void SceneNode::rotate(const Vector3& axis, float angle)
 
 	mOrientation = q; //Order is */
 
-	Matrix4 rotationM;
-	if (axis != Vector3(0.0)) //Just in case
+	if (axis != Vector3(0.0) && (angle != 0)) //Just in case
 	{
-		rotationM.rotate(angle * Root::getSingleton()->getLastFrameDelayInSeconds(), axis);
+		mOrientation = Quaternion(angle * Root::getSingleton()->getLastFrameDelayInSeconds(), axis) * mOrientation;
+
+		mOrientation = Math::normalize(mOrientation);
+
+		mDirty = true;
+
+		//Rotation has changed so we update all
+		updateFromParent();
 	}
-
-	//Create a quaternion from the matrix
-	mOrientation = mOrientation * Quaternion(rotationM);
-
-	mDirty = true;
-
-	//Rotation has changed so we update all
-	updateFromParent();
 }
 
 void SceneNode::scale(Vector3 axis)

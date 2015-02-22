@@ -11,5 +11,9 @@ public:
 	void onKeyDownEvent(const KeyboardEvent* eventTriggered);
 	void onKeyUpEvent(const KeyboardEvent* eventTriggered);
 	void onFrameStartedEvent();
+	void onMouseEvent(const MouseEvent* eventTriggered);
+
+private:
+	bool transW, transS, transA, transD;
 };
 

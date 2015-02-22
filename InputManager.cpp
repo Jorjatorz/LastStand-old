@@ -1,5 +1,6 @@
 #include "InputManager.h"
 
+#include "MouseEvent.h"
 #include "KeyboardEvent.h"
 #include "EventManager.h"
 #include "Root.h"
@@ -13,11 +14,13 @@ InputManager::InputManager(SDL_Window* SDLWindow)
 		*elem = false;
 	}
 	//Same with mouse
-	foreach(elem, mMouseInput.mMousePressedArray)
+	foreach(elem, mMouseState.mMousePressedArray)
 	{
 		*elem = false;
 	}
-	mMouseInput.mouseX = mMouseInput.mouseY = 0;
+	mMouseState.mouseX = mMouseState.mouseY = 0;
+	mMouseState.mouseXOld = mMouseState.mouseYOld = 0;
+	mMouseState.mouseXVariation = mMouseState.mouseYVariation = 0;
 }
 
 
@@ -39,17 +42,33 @@ void InputManager::processInputEvents()
 
 		if (mEvent.type == SDL_MOUSEMOTION)
 		{
-			SDL_GetMouseState(&mMouseInput.mouseX, &mMouseInput.mouseY);
+			mMouseState.mouseXOld = mMouseState.mouseX;
+			mMouseState.mouseYOld = mMouseState.mouseY;
+
+			SDL_GetMouseState(&mMouseState.mouseX, &mMouseState.mouseY);
+			
+			mMouseState.mouseXVariation = mMouseState.mouseX - mMouseState.mouseXOld;
+			mMouseState.mouseYVariation = mMouseState.mouseY - mMouseState.mouseYOld;
+
+			//Create the mouse event
+			MouseEvent mouseEvent = MouseEvent(mMouseState.mouseX, mMouseState.mouseY, mMouseState.mouseXOld, mMouseState.mouseYOld, mEvent.button.button, MouseEvent::MOUSE_MOTION);
+			eventManagerPtr->mouseEvent(&mouseEvent);
 		}
 
 		if (mEvent.type == SDL_MOUSEBUTTONDOWN)
 		{
-			mMouseInput.mMousePressedArray[mEvent.button.button - 1] = true; //-1 to pass from sdl encoding to array acces encoding
+			mMouseState.mMousePressedArray[mEvent.button.button - 1] = true; //-1 to pass from sdl encoding to array acces encoding
+			//Create the mouse event
+			MouseEvent mouseEvent = MouseEvent(mMouseState.mouseX, mMouseState.mouseY, mMouseState.mouseXOld, mMouseState.mouseYOld, mEvent.button.button, MouseEvent::BUTTON_DOWN); //Same coordinates for old X and Y. They haven't changed
+			eventManagerPtr->mouseEvent(&mouseEvent);
 		}
 
 		if (mEvent.type == SDL_MOUSEBUTTONUP)
 		{
-			mMouseInput.mMousePressedArray[mEvent.button.button - 1] = false;
+			mMouseState.mMousePressedArray[mEvent.button.button - 1] = false;
+			//Create the mouse event
+			MouseEvent mouseEvent = MouseEvent(mMouseState.mouseX, mMouseState.mouseY, mMouseState.mouseXOld, mMouseState.mouseYOld, mEvent.button.button, MouseEvent::BUTTON_UP);
+			eventManagerPtr->mouseEvent(&mouseEvent);
 		}
 
 		if (mEvent.type == SDL_KEYDOWN)
@@ -68,4 +87,9 @@ void InputManager::processInputEvents()
 			eventManagerPtr->keyUpEvent(&keyEvent);
 		}
 	}
+}
+
+void InputManager::resetMousePosition()
+{
+	SDL_WarpMouseInWindow(mSDLWindowPtr, 540, 360);
 }

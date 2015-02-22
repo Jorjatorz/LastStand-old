@@ -30,6 +30,10 @@ public:
 	virtual void onFrameEndedEvent()
 	{
 	}
+	//When a mouse event is triggered
+	virtual void onMouseEvent(const MouseEvent* eventTriggered)
+	{
+	}
 
 private:
 	bool mRegistered;

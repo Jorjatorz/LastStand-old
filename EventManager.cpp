@@ -38,6 +38,16 @@ void EventManager::keyUpEvent(const KeyboardEvent* eventTriggered)
 	}
 }
 
+void EventManager::mouseEvent(const MouseEvent* eventTriggered)
+{
+	//Notify to all the listeners
+	foreach(listener, mEventListenerList)
+	{
+		(*listener)->onMouseEvent(eventTriggered);
+	}
+}
+
+
 void EventManager::frameStartedEvent()
 {
 	//Notify to all the listeners

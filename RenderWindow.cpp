@@ -49,7 +49,7 @@ RenderWindow::RenderWindow(std::string windowName, int width, int height)
 	mGBuffer = new DeferredFrameBuffer("RenderWindow_GBuffer", mWidth, mHeight);
 
 	//Set default perspective matrix
-	mProjectionMatrix = Matrix4::createPerspectiveMatrix(60.0f, (float)mWidth, (float)mHeight, 0.001f, 1000.0f);
+	mProjectionMatrix = Math::createPerspectiveMatrix(60.0f, (float)mWidth, (float)mHeight, 0.001f, 1000.0f);
 
 	FE_LOG(FE_LOG::INFO, "Render Window created");
 }

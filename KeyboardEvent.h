@@ -10,6 +10,6 @@ public:
 	KeyboardEvent(int key);
 	~KeyboardEvent();
 
-	const KEYBOARD::tKeyEnum mPressedKey;
+	const KEYBOARD::tKeysEnum mPressedKey;
 };
 

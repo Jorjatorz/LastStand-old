@@ -40,5 +40,7 @@ public:
 	union{ float y, g, t; };
 	union{ float z, b, p; };
 
+	friend class Math;
+
 };
 

@@ -1,9 +1,10 @@
 #pragma once
 
-#include "Vector3.h"
-
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
+
+//Forward declaration
+class Vector3;
 
 class Matrix4
 {
@@ -27,12 +28,9 @@ public:
 
 	//Return a matrix that is the inverse of itself
 	Matrix4 getInverseMatrix();
-	//Return a matrix that is the inverse of the parameter matrix
-	static Matrix4 inverse(const Matrix4& mat);
+
 	//Return a matrix that is the transpose of itself
 	Matrix4 getTransposeMatrix();
-	//Return a matrix that is the transpose of the parameter matrix
-	static Matrix4 transpose(const Matrix4& mat);
 
 	//Translates the matrix by a given vector
 	void translate(const Vector3& transVec);
@@ -43,9 +41,6 @@ public:
 	//Scales the matrix by a given vector value
 	void scale(const Vector3& scaleVec);
 
-	//Generates a perspective matrix
-	static Matrix4 createPerspectiveMatrix(float FOV, float width, float height, float zNear, float zFar);
-
 	//Return the constant address of the first element of the vector
 	const float* getValuePtr() const;
 
@@ -53,7 +48,6 @@ private:
 	//Real matrix. Use GLM to do matrix calculations
 	glm::mat4 mGLMMatrix;
 
-	//Let Quaternion class read the glm matrix
-	friend class Quaternion;
+	friend class Math;
 };
 

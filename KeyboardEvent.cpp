@@ -2,7 +2,7 @@
 
 
 KeyboardEvent::KeyboardEvent(int key)
-	:mPressedKey((KEYBOARD::tKeyEnum)key)
+	:mPressedKey((KEYBOARD::tKeysEnum)key)
 {
 }
 

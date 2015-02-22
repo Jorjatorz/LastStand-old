@@ -22,9 +22,7 @@
 
 //Custom engine includes
 #include "FE_LOG.h"
-#include "Matrix4.h"
-#include "Quaternion.h"
-#include "Vector3.h"
+#include "Math.h"
 
 class Camera;
 class DeferredFrameBuffer;
@@ -103,7 +101,19 @@ namespace KEYBOARD
 		BACKSPACE = 42,
 		TAB = 43,
 		SPACE = 44
-	} tKeyEnum;
+	} tKeysEnum;
+}
+
+namespace MOUSE
+{
+	typedef enum
+	{
+		UNKWNOWN,
+
+		LEFT,
+		MIDDLE,
+		RIGHT
+	} tMouseButtonsEnum;
 }
 
 //Defines

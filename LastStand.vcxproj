@@ -85,6 +85,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="KeyboardEvent.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Math.cpp" />
     <ClCompile Include="Matrix4.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MouseEvent.cpp" />
@@ -116,6 +117,7 @@
     <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="KeyboardEvent.h" />
+    <ClInclude Include="Math.h" />
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MouseEvent.h" />

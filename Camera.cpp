@@ -6,10 +6,10 @@
 Camera::Camera(std::string name)
 	:MovableObject(name, MovableObject::RENDERABLE),
 	mDirty(true),
-	mPosition(Vector3(0.0)),
-	mLastParentPosition(Vector3(0.0)),
-	mOrientation(Quaternion()),
-	mLastParentOrientation(Quaternion())
+	mPosition(0.0),
+	mLastParentPosition(0.0),
+	mOrientation(),
+	mLastParentOrientation()
 {
 }
 
@@ -34,6 +34,8 @@ void Camera::processViewMatrix()
 			mLastParentOrientation = mParentSceneNode->getDerivedOrientation();
 
 			recalculateViewMatrix();
+
+			mDirty = false;
 		}
 	}
 	else
@@ -42,6 +44,8 @@ void Camera::processViewMatrix()
 		if (mDirty)
 		{
 			recalculateViewMatrix();
+
+			mDirty = false;
 		}
 	}
 }
@@ -50,9 +54,15 @@ void Camera::recalculateViewMatrix()
 {
 	mViewMatrix = Matrix4();
 
-	//Calculate new view matrix, the viewmatrix translates and rotates everything opposite to the camera and orientation position
+	Vector3 finalPosition = mLastParentPosition + mPosition;
+	Vector3 finalOrientation = Math::toEulerAngles(mOrientation * mLastParentOrientation);
+	std::cout << finalOrientation.x << " " << finalOrientation.y << " " << finalOrientation.z << std::endl;
+
+	//mViewMatrix = Math::createLookAtMatrix(finalPosition, finalPosition + finalOrientation, Vector3(0.0, 1.0, 0.0));
+
+	/*//Calculate new view matrix, the viewmatrix translates and rotates everything opposite to the camera and orientation position
 	mViewMatrix.translate(-(mLastParentPosition + mPosition));
-	mViewMatrix = mViewMatrix * (-(mLastParentOrientation * mOrientation)).toMat4();
+	mViewMatrix = mViewMatrix * Math::toMat4(-(mLastParentOrientation * mOrientation));*/
 }
 
 void Camera::setPosition(const Vector3& newPos)
@@ -74,21 +84,19 @@ void Camera::translate(const Vector3& trans)
 
 void Camera::rotate(Vector3 axis, float angle)
 {
-	Matrix4 rotationM;
-	if (axis != Vector3(0.0)) //Just in case
+	if (axis != Vector3(0.0) && (angle != 0)) //Just in case
 	{
-		rotationM.rotate(angle * Root::getSingleton()->getLastFrameDelayInSeconds(), axis);
+		mOrientation = Quaternion(angle * Root::getSingleton()->getLastFrameDelayInSeconds(), axis) * mOrientation;
+
+		mOrientation = Math::normalize(mOrientation);
+
+		mDirty = true;
 	}
-
-	//Create a quaternion from the matrix
-	mOrientation = mOrientation * Quaternion(rotationM);
-
-	mDirty = true;
 }
 
 void Camera::roll(float amount)
 {
-	rotate(Vector3(0.0, 1.0, 0.0), amount);
+	rotate(Vector3(1.0, 0.0, 0.0), amount);
 }
 
 void Camera::yaw(float amount)
@@ -98,5 +106,5 @@ void Camera::yaw(float amount)
 
 void Camera::pitch(float amount)
 {
-	rotate(Vector3(0.0, 1.0, 0.0), amount);
+	rotate(Vector3(0.0, 0.0, 1.0), amount);
 }

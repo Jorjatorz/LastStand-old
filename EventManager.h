@@ -19,7 +19,7 @@ public:
 	void frameEndededEvent();
 	void keyDownEvent(const KeyboardEvent* eventTriggered);
 	void keyUpEvent(const KeyboardEvent* eventTriggered);
-	void mouseEvent(const Event* eventTriggered);
+	void mouseEvent(const MouseEvent* eventTriggered);
 	//game started, game fiished, etc, etc
 
 private:
