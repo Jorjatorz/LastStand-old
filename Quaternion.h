@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <glm\glm.hpp>
 #include <glm\gtc\quaternion.hpp>
 #include <glm\gtx\quaternion.hpp>
@@ -15,11 +16,13 @@ public:
 	Quaternion(float w, float x, float y, float z);
 	Quaternion(float x, float y, float z); //Euler angles to quaternion, in degrees
 	Quaternion(const Vector3& euler); //Euler angles to quaternion, in degrees
-	Quaternion(float degrees, const Vector3& axis);
+	Quaternion(float radians, const Vector3& axis);
 	~Quaternion();
 
 
 	//Operator overloading
+	friend std::ostream& operator<<(std::ostream& out, Quaternion& quat);
+
 	Quaternion& operator=(const Quaternion& other);
 	bool operator==(const Quaternion& other) const;
 	bool operator!=(const Quaternion& other) const;
@@ -29,10 +32,8 @@ public:
 
 	Quaternion operator-();
 
-	//Transform the quaternion into a matrix
-	Matrix4 toMat4();
-	//Returns the euler angles
-	Vector3 toEulerAngles();
+	//Normalize the quaternion
+	void normalize();
 
 	float getX()
 	{

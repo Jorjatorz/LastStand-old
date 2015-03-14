@@ -25,15 +25,22 @@ Quaternion::Quaternion(const Vector3& euler)
 	mGLMQuat = glm::quat(glm::radians(eulerA));
 }
 
-Quaternion::Quaternion(float degrees, const Vector3& axis)
+Quaternion::Quaternion(float radians, const Vector3& axis)
 {
 	glm::vec3 eulerA(axis.x, axis.y, axis.z);
 
-	mGLMQuat = glm::angleAxis(degrees, eulerA);
+	mGLMQuat = glm::angleAxis(radians, eulerA);
 }
 
 Quaternion::~Quaternion()
 {
+}
+
+std::ostream& operator<<(std::ostream& out, Quaternion& quat)
+{
+	out << "W: " << quat.getW() << " X: " << quat.getX() << " Y: " << quat.getY() << " Z: " << quat.getZ();
+
+	return out;
 }
 
 Quaternion& Quaternion::operator=(const Quaternion& other)
@@ -74,4 +81,9 @@ Quaternion Quaternion::operator-()
 	newQuat.mGLMQuat = -mGLMQuat;
 
 	return newQuat;
+}
+
+void Quaternion::normalize()
+{
+	mGLMQuat = glm::normalize(mGLMQuat);
 }

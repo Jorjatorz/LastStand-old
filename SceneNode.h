@@ -48,11 +48,12 @@ public:
 
 	//transformations functions
 	void translate(Vector3 trans);
-	void rotate(const Vector3& axis, float angle);
+	void rotate(float angle, const Vector3& axis);
+	void rotate(const Quaternion& quat);
+	void pitch(float angle); //Rotate on X axis, amount in degrees
+	void yaw(float angle); //Rotate on Y axis, amount in degrees
+	void roll(float angle); //Rotate on Z axis, amount in degrees
 	void scale(Vector3 axis);
-	void roll(float amount); //Rotate on X axis, amount in degrees
-	void yaw(float amount); //Rotate on Y axis, amount in degrees
-	void pitch(float amount); //Rotate on Z axis, amount in degrees
 	void setPosition(Vector3 newPos);
 	void setOrientation(Quaternion newOrientation);
 	void setScale(Vector3 newScale);

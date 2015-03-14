@@ -1,13 +1,11 @@
 #include "MouseEvent.h"
 
-MouseEvent::MouseEvent(int newX, int newY, int oldX_, int oldY_, int but, tMouseActionEnum action)
+MouseEvent::MouseEvent(int newX, int newY, int xVar, int yVar, int button, tMouseActionEnum action)
 	:x(newX),
 	y(newY),
-	oldX(oldX_),
-	oldY(oldY_),
-	mButton(static_cast<MOUSE::tMouseButtonsEnum>(but)),
-	variationX(x - oldX),
-	variationY(y - oldY),
+	mButton(static_cast<MOUSE::tMouseButtonsEnum>(button)),
+	xVariation(xVar),
+	yVariation(yVar),
 	mButtonActionType(action)
 {
 }

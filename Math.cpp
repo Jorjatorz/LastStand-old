@@ -68,6 +68,15 @@ Vector3 Math::normalize(const Vector3& a)
 	}
 }
 
+Vector3 Math::multiply(const Quaternion& quat, const Vector3& vec)
+{
+	glm::vec3 aux(vec.x, vec.y, vec.z);
+
+	glm::vec3 result = quat.mGLMQuat * aux;
+
+	return Vector3(result.x, result.y, result.z);
+}
+
 Matrix4 Math::createPerspectiveMatrix(float FOV, float width, float height, float zNear, float zFar)
 {
 	Matrix4 newMat;
@@ -140,4 +149,47 @@ Quaternion Math::normalize(const Quaternion& quat)
 	toRet.mGLMQuat = glm::normalize(quat.mGLMQuat);
 
 	return toRet;
+}
+
+Quaternion Math::rotationBetweenVectors(Vector3 start, Vector3 dest)
+{
+
+	start = Math::normalize(start);
+	dest = Math::normalize(dest);
+
+	float cosTheta = Math::dotProduct(start, dest);
+	Vector3 rotationAxis;
+
+	if (cosTheta < -1 + 0.001f){
+		// special case when vectors in opposite directions:
+		// there is no "ideal" rotation axis
+		// So guess one; any will do as long as it's perpendicular to start
+		rotationAxis = Math::crossProduct(Vector3(0.0f, 0.0f, 1.0f), start);
+		/*if (glm::length2(rotationAxis) < 0.01) // bad luck, they were parallel, try again!
+			rotationAxis = Math::crossProduct(Vector3(1.0f, 0.0f, 0.0f), start);*/
+
+		rotationAxis = normalize(rotationAxis);
+		return Quaternion(180.0f, rotationAxis);
+	}
+
+	rotationAxis = Math::crossProduct(start, dest);
+
+	float s = sqrt((1 + cosTheta) * 2);
+	float invs = 1 / s;
+
+	return Quaternion(
+		s * 0.5f,
+		rotationAxis.x * invs,
+		rotationAxis.y * invs,
+		rotationAxis.z * invs
+		);
+
+}
+Quaternion Math::slerp(const Quaternion& quat1, const Quaternion& quat2, float amount)
+{
+	Quaternion newQuat;
+
+	newQuat.mGLMQuat = glm::slerp(quat1.mGLMQuat, quat2.mGLMQuat, amount);
+
+	return newQuat;
 }

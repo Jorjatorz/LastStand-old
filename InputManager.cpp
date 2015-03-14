@@ -19,8 +19,9 @@ InputManager::InputManager(SDL_Window* SDLWindow)
 		*elem = false;
 	}
 	mMouseState.mouseX = mMouseState.mouseY = 0;
-	mMouseState.mouseXOld = mMouseState.mouseYOld = 0;
 	mMouseState.mouseXVariation = mMouseState.mouseYVariation = 0;
+
+	SDL_SetRelativeMouseMode(SDL_TRUE);
 }
 
 
@@ -42,16 +43,14 @@ void InputManager::processInputEvents()
 
 		if (mEvent.type == SDL_MOUSEMOTION)
 		{
-			mMouseState.mouseXOld = mMouseState.mouseX;
-			mMouseState.mouseYOld = mMouseState.mouseY;
-
-			SDL_GetMouseState(&mMouseState.mouseX, &mMouseState.mouseY);
+			mMouseState.mouseX = mEvent.motion.x;
+			mMouseState.mouseY = mEvent.motion.y;
 			
-			mMouseState.mouseXVariation = mMouseState.mouseX - mMouseState.mouseXOld;
-			mMouseState.mouseYVariation = mMouseState.mouseY - mMouseState.mouseYOld;
+			mMouseState.mouseXVariation = mEvent.motion.xrel;
+			mMouseState.mouseYVariation = mEvent.motion.yrel;
 
 			//Create the mouse event
-			MouseEvent mouseEvent = MouseEvent(mMouseState.mouseX, mMouseState.mouseY, mMouseState.mouseXOld, mMouseState.mouseYOld, mEvent.button.button, MouseEvent::MOUSE_MOTION);
+			MouseEvent mouseEvent = MouseEvent(mMouseState.mouseX, mMouseState.mouseY, mMouseState.mouseXVariation, mMouseState.mouseYVariation, mEvent.button.button, MouseEvent::MOUSE_MOTION);
 			eventManagerPtr->mouseEvent(&mouseEvent);
 		}
 
@@ -59,7 +58,7 @@ void InputManager::processInputEvents()
 		{
 			mMouseState.mMousePressedArray[mEvent.button.button - 1] = true; //-1 to pass from sdl encoding to array acces encoding
 			//Create the mouse event
-			MouseEvent mouseEvent = MouseEvent(mMouseState.mouseX, mMouseState.mouseY, mMouseState.mouseXOld, mMouseState.mouseYOld, mEvent.button.button, MouseEvent::BUTTON_DOWN); //Same coordinates for old X and Y. They haven't changed
+			MouseEvent mouseEvent = MouseEvent(mMouseState.mouseX, mMouseState.mouseY, mMouseState.mouseXVariation, mMouseState.mouseYVariation, mEvent.button.button, MouseEvent::BUTTON_DOWN); //Same coordinates for old X and Y. They haven't changed
 			eventManagerPtr->mouseEvent(&mouseEvent);
 		}
 
@@ -67,7 +66,7 @@ void InputManager::processInputEvents()
 		{
 			mMouseState.mMousePressedArray[mEvent.button.button - 1] = false;
 			//Create the mouse event
-			MouseEvent mouseEvent = MouseEvent(mMouseState.mouseX, mMouseState.mouseY, mMouseState.mouseXOld, mMouseState.mouseYOld, mEvent.button.button, MouseEvent::BUTTON_UP);
+			MouseEvent mouseEvent = MouseEvent(mMouseState.mouseX, mMouseState.mouseY, mMouseState.mouseXVariation, mMouseState.mouseYVariation, mEvent.button.button, MouseEvent::BUTTON_UP);
 			eventManagerPtr->mouseEvent(&mouseEvent);
 		}
 

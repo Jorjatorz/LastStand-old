@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <glm\glm.hpp>
 
 //Warp class for glm vector
@@ -12,9 +13,20 @@ public:
 	~Vector3();
 
 	//Operator overloading
+	friend std::ostream& operator<<(std::ostream& out, const Vector3& vec);
+
 	Vector3& operator=(const Vector3& other);
 	bool operator==(const Vector3& other) const;
 	bool operator!=(const Vector3& other) const;
+
+	bool operator>(const Vector3& other) const;
+	bool operator>(float value) const;
+	bool operator>=(const Vector3& other) const;
+	bool operator>=(float value) const;
+	bool operator<(const Vector3& other) const;
+	bool operator<(float value) const;
+	bool operator<=(const Vector3& other) const;
+	bool operator<=(float value) const;
 
 	Vector3& operator+=(const Vector3& other);
 	Vector3& operator-=(const Vector3& other);

@@ -15,25 +15,15 @@ public:
 
 	//EVENT CALLS
 	//key up event occured
-	virtual void onKeyDownEvent(const KeyboardEvent* eventTriggered)
-	{
-	}
+	virtual void onKeyDownEvent(const KeyboardEvent* eventTriggered) = 0;
 	//Key down event occured
-	virtual void onKeyUpEvent(const KeyboardEvent* eventTriggered)
-	{
-	}
+	virtual void onKeyUpEvent(const KeyboardEvent* eventTriggered) = 0;
 	//When a frame is started
-	virtual void onFrameStartedEvent()
-	{
-	}
+	virtual void onFrameStartedEvent() = 0;
 	//When a frame is ended
-	virtual void onFrameEndedEvent()
-	{
-	}
+	virtual void onFrameEndedEvent() = 0;
 	//When a mouse event is triggered
-	virtual void onMouseEvent(const MouseEvent* eventTriggered)
-	{
-	}
+	virtual void onMouseEvent(const MouseEvent* eventTriggered) = 0;
 
 private:
 	bool mRegistered;

@@ -16,12 +16,11 @@ public:
 		BUTTON_UP
 	} tMouseActionEnum;
 
-	MouseEvent(int newX, int newY, int oldX_, int oldY_, int but, tMouseActionEnum action);
+	MouseEvent(int newX, int newY, int xVar, int yVar, int button, tMouseActionEnum action);
 	~MouseEvent();
 
 	const MOUSE::tMouseButtonsEnum mButton;
 	const tMouseActionEnum mButtonActionType;
 	const int x, y;
-	const int oldX, oldY;
-	const int variationX, variationY;
+	const int xVariation, yVariation;
 };

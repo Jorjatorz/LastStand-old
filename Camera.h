@@ -21,12 +21,13 @@ public:
 
 	//Setters
 	void setPosition(const Vector3& newPos);
-	void setOrientation(const Quaternion& newOrient);
+	void setOrientation(const Quaternion& newOrientation);
 	void translate(const Vector3& trans);
-	void rotate(Vector3 axis, float angle);
-	void roll(float amount); //Rotate on X axis, amount in degrees
-	void yaw(float amount); //Rotate on Y axis, amount in degrees
-	void pitch(float amount); //Rotate on Z axis, amount in degrees
+	void rotate(float angle, const Vector3& axis);
+	void rotate(const Quaternion& quat);
+	void pitch(float angle); //Rotate on X axis, amount in degrees
+	void yaw(float angle); //Rotate on Y axis, amount in degrees
+	void roll(float angle); //Rotate on Z axis, amount in degrees
 
 	//Getters
 	Vector3 getPostion()
@@ -41,9 +42,9 @@ public:
 	{
 		return mOrientation;
 	}
-	Quaternion  getDerivedOrientation()
+	Quaternion getDerivedOrientation()
 	{
-		return mLastParentOrientation + mOrientation;
+		return mLastParentOrientation * mOrientation;
 	}
 
 private:

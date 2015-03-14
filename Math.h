@@ -25,6 +25,7 @@ public:
 	static float dotProduct(const Vector3& a, const Vector3& b);
 	static Vector3 crossProduct(const Vector3& a, const Vector3& b);
 	static Vector3 normalize(const Vector3& a);
+	static Vector3 multiply(const Quaternion& quat, const Vector3& vec); //Multiply a vector by a quaternion
 
 	//Matrix
 	//Generates a perspective matrix
@@ -38,5 +39,7 @@ public:
 	static Matrix4 toMat4(const Quaternion& quat);
 	static Vector3 toEulerAngles(const Quaternion& quat);
 	static Quaternion normalize(const Quaternion& quat);
+	static Quaternion rotationBetweenVectors(Vector3 start, Vector3 dest);
+	static Quaternion slerp(const Quaternion& quat1, const Quaternion& quat2, float amount);
 };
 

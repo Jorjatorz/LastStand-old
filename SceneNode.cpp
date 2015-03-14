@@ -203,6 +203,8 @@ void SceneNode::processDerivedPosition()
 	{
 		mDerivedPosition = mPosition;
 	}
+
+	mDirty = true;
 }
 void SceneNode::processDerivedOrientation()
 {
@@ -215,6 +217,8 @@ void SceneNode::processDerivedOrientation()
 	{
 		mDerivedOrientation = mOrientation;
 	}
+
+	mDirty = true;
 }
 void SceneNode::processDerivedScale()
 {
@@ -227,6 +231,8 @@ void SceneNode::processDerivedScale()
 	{
 		mDerivedScale = mScale;
 	}
+
+	mDirty = true;
 }
 
 
@@ -240,25 +246,45 @@ void SceneNode::translate(Vector3 trans)
 	updateFromParent();
 }
 
-void SceneNode::rotate(const Vector3& axis, float angle)
+void SceneNode::rotate(float angle, const Vector3& axis)
 {
-	/*Quaternion q;
-	q = glm::angleAxis(angle, axis); //Suppose angle is in degrees
-	glm::normalize(q); //Normalize to avoid drift
+	rotate(Quaternion(Math::toRadians(angle * Root::getSingleton()->getLastFrameDelayInSeconds()), axis));
+}
 
-	mOrientation = q; //Order is */
+void SceneNode::rotate(const Quaternion& quat)
+{
+	Quaternion dest = quat;
+	dest.normalize();
 
-	if (axis != Vector3(0.0) && (angle != 0)) //Just in case
-	{
-		mOrientation = Quaternion(angle * Root::getSingleton()->getLastFrameDelayInSeconds(), axis) * mOrientation;
+	mOrientation = dest * mOrientation;
 
-		mOrientation = Math::normalize(mOrientation);
+	mDirty = true;
 
-		mDirty = true;
+	updateFromParent();
+}
 
-		//Rotation has changed so we update all
-		updateFromParent();
-	}
+void SceneNode::pitch(float angle)
+{
+	//Rotate around the local X axis
+	Vector3 axis = Math::multiply(mOrientation, Vector3(1.0, 0.0, 0.0));
+
+	rotate(angle, axis);
+}
+
+void SceneNode::yaw(float angle)
+{
+	//Rotate around the local Y axis
+	Vector3 axis = Math::multiply(mOrientation, Vector3(0.0, 1.0, 0.0));
+
+	rotate(angle, axis);
+}
+
+void SceneNode::roll(float angle)
+{
+	//Rotate around the local Z axis
+	Vector3 axis = Math::multiply(mOrientation, Vector3(0.0, 0.0, 1.0));
+
+	rotate(angle, axis);
 }
 
 void SceneNode::scale(Vector3 axis)
@@ -270,22 +296,6 @@ void SceneNode::scale(Vector3 axis)
 	//Scale has changed so we update all
 	updateFromParent();
 }
-
-void SceneNode::roll(float amount)
-{
-	rotate(Vector3(0.0, 1.0, 0.0), amount);
-}
-
-void SceneNode::yaw(float amount)
-{
-	rotate(Vector3(0.0, 1.0, 0.0), amount);
-}
-
-void SceneNode::pitch(float amount)
-{
-	rotate(Vector3(0.0, 1.0, 0.0), amount);
-}
-
 
 void SceneNode::lookAt(Vector3 lookAtPoint, Vector3 objectFacing)
 {

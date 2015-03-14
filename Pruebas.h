@@ -11,6 +11,7 @@ public:
 	void onKeyDownEvent(const KeyboardEvent* eventTriggered);
 	void onKeyUpEvent(const KeyboardEvent* eventTriggered);
 	void onFrameStartedEvent();
+	void onFrameEndedEvent();
 	void onMouseEvent(const MouseEvent* eventTriggered);
 
 private:

@@ -12,7 +12,6 @@ public:
 	{
 		bool mMousePressedArray[3]; // 1: left, 2: middle, 3: right
 		int mouseX, mouseY;
-		int mouseXOld, mouseYOld;
 		int mouseXVariation, mouseYVariation;
 	} tMouseStateStruct;
 

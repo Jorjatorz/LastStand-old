@@ -39,6 +39,16 @@ Pruebas::Pruebas()
 	node1->attachObject(ent1);
 	node1->setPosition(Vector3(1.0, 0.0, -5.00));
 
+	SceneNode* camNode, *yawNode, *pitchNode;
+	camNode = Root::getSingleton()->getSceneManager()->getRootSceneNode()->createChildSceneNode("cameraNode");
+	yawNode = camNode->createChildSceneNode("yawNode");
+	pitchNode = yawNode->createChildSceneNode("pitchNode");
+	pitchNode->attachObject(cam);
+
+	yawNode->yaw(90);
+
+
+
 	//For the objects
 	ResourceManager::getSingleton()->loadShaderIntoMemoryFromFile("basicObject");
 
@@ -74,6 +84,15 @@ void Pruebas::onKeyDownEvent(const KeyboardEvent* eventTriggered)
 		transA = true;
 	}
 
+	if (eventTriggered->mPressedKey == KEYBOARD::C)
+	{
+		SDL_SetRelativeMouseMode(SDL_TRUE);
+	}
+	else if (eventTriggered->mPressedKey == KEYBOARD::V)
+	{
+		SDL_SetRelativeMouseMode(SDL_FALSE);
+	}
+
 	if (eventTriggered->mPressedKey == KEYBOARD::G)
 	{
 		ResourceManager::getSingleton()->reloadAllShadersFromFiles();
@@ -100,24 +119,12 @@ void Pruebas::onKeyUpEvent(const KeyboardEvent* eventTriggered)
 	}
 }
 
-bool a = false;
 void Pruebas::onMouseEvent(const MouseEvent* eventTriggered)
 {
-	if (eventTriggered->mButtonActionType == MouseEvent::BUTTON_DOWN)
+	if (eventTriggered->mButtonActionType == MouseEvent::MOUSE_MOTION)
 	{
-		if (eventTriggered->mButton == MOUSE::LEFT)
-		{
-			a = true;
-		}
-	}
-
-
-	if (eventTriggered->mButtonActionType == MouseEvent::BUTTON_UP)
-	{
-		if (eventTriggered->mButton == MOUSE::LEFT)
-		{
-			a = false;
-		}
+		Root::getSingleton()->getSceneManager()->getSceneNode("yawNode")->yaw(-eventTriggered->xVariation * 1000);
+	    Root::getSingleton()->getSceneManager()->getSceneNode("pitchNode")->pitch(-eventTriggered->yVariation * 1000);
 	}
 }
 
@@ -126,30 +133,24 @@ void Pruebas::onFrameStartedEvent()
 {
 	if (transW)
 	{
-		Root::getSingleton()->getSceneManager()->getCamera("viewCamera")->translate(Vector3(0.0, 0.0, -5.0));
+		Root::getSingleton()->getSceneManager()->getSceneNode("cameraNode")->translate(Vector3(0.0, 0.0, -5.0));
 	}
 	else if (transS)
 	{
-		Root::getSingleton()->getSceneManager()->getCamera("viewCamera")->translate(Vector3(0.0, 0.0, 5.0));
+		Root::getSingleton()->getSceneManager()->getSceneNode("cameraNode")->translate(Vector3(0.0, 0.0, 5.0));
 	}
 
 	if (transA)
 	{
-		Root::getSingleton()->getSceneManager()->getCamera("viewCamera")->translate(Vector3(-5.0, 0.0, 0.0));
+		Root::getSingleton()->getSceneManager()->getSceneNode("cameraNode")->translate(Vector3(-5.0, 0.0, 0.0));
 	}
 	else if (transD)
 	{
-		Root::getSingleton()->getSceneManager()->getCamera("viewCamera")->translate(Vector3(5.0, 0.0, 0.0));
+		Root::getSingleton()->getSceneManager()->getSceneNode("cameraNode")->translate(Vector3(5.0, 0.0, 0.0));
 	}
+}
 
-	if (a)
-	{
-		Root::getSingleton()->getSceneManager()->getCamera("viewCamera")->yaw(1 * 180 / 3.14);
+void Pruebas::onFrameEndedEvent()
+{
 
-		Quaternion quat = Root::getSingleton()->getSceneManager()->getCamera("viewCamera")->getOrientation();
-		Vector3 finalOrientation = Math::toEulerAngles(quat);
-
-		std::cout << quat.getW() << " " << quat.getX() << " " << quat.getY() << " " << quat.getZ() << std::endl;
-		//std::cout << finalOrientation.x << " " << finalOrientation.y << " " << finalOrientation.z << std::endl;
-	}
 }

@@ -1,6 +1,5 @@
 #include "Vector3.h"
 
-
 Vector3::Vector3()
 	:x(0.0),
 	y(0.0),
@@ -27,6 +26,12 @@ Vector3::~Vector3()
 {
 }
 
+std::ostream& operator<<(std::ostream& out, const Vector3& vec)
+{
+	out << "X: " << vec.x << " Y: " << vec.y << " Z: " << vec.z;
+
+	return out;
+}
 
 Vector3& Vector3::operator=(const Vector3& other)
 {
@@ -45,6 +50,46 @@ bool Vector3::operator == (const Vector3& other) const
 bool Vector3::operator!=(const Vector3& other) const
 {
 	return !(*this == other);
+}
+
+bool Vector3::operator>(const Vector3& other) const
+{
+	return ((x > other.x) && (y > other.y) && (z > other.z));
+}
+
+bool Vector3::operator>(float value) const
+{
+	return ((x > value) && (y > value) && (z > value));
+}
+
+bool Vector3::operator>=(const Vector3& other) const
+{
+	return ((x >= other.x) && (y >= other.y) && (z >= other.z));
+}
+
+bool Vector3::operator>=(float value) const
+{
+	return ((x >= value) && (y >= value) && (z >= value));
+}
+
+bool Vector3::operator<(const Vector3& other) const
+{
+	return ((x < other.x) && (y < other.y) && (z < other.z));
+}
+
+bool Vector3::operator<(float value) const
+{
+	return ((x < value) && (y < value) && (z < value));
+}
+
+bool Vector3::operator<=(const Vector3& other) const
+{
+	return ((x <= other.x) && (y <= other.y) && (z <= other.z));
+}
+
+bool Vector3::operator<=(float value) const
+{
+	return ((x <= value) && (y <= value) && (z <= value));
 }
 
 Vector3& Vector3::operator+=(const Vector3& other)
